@@ -1,0 +1,80 @@
+form{
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+.textField{
+    position:relative;
+    width: 100%;
+    height: 56px;
+    margin: 0;
+    padding: 0px 16px;
+    background-color: inherit;
+    border-radius: 4px;
+}
+
+.textField input{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface);
+}
+
+.textField input::placeholder{
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.textField.outlined{
+    border: 1px solid var(--md-sys-color-outline);
+    color: var(--md-sys-color-outline);
+}
+
+.textField.outlined label{
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    background-color: inherit;
+    padding: 0 4px;
+    transition: all 0.1s ease-in-out;
+    
+}
+
+.textField.outlined:hover{
+    border-color: var(--md-sys-color-on-background);
+}
+
+.textField.outlined:hover label{
+    color: var(--md-sys-color-on-background);
+}
+
+.textField.outlined:has( input:focus) {
+    border-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-primary);
+}
+
+.textField.outlined:has( input:focus) label {
+    color: var(--md-sys-color-primary);
+}
+
+.textField.outlined:has( input:placeholder-shown ) label{
+    height: fit-content;
+    top:0;
+    bottom: 0;
+    left: 16px;
+    margin: auto;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 16px;
+}
+.textField.outlined.error, .textField.outlined.error:has( input:focus){
+    border-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-error);
+}
+
+.textField.outlined.error label, .textField.outlined.error:has( input:focus) label{
+    color: var(--md-sys-color-error);
+}
