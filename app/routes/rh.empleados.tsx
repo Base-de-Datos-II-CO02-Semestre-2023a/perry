@@ -1,13 +1,17 @@
 import { LinksFunction } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
 
-
-
-export const handle ={
-    title: () => "Empleados"
+export const loader: LoaderFunction = async ({ request, params }:LoaderArgs) => {
+    
+        
+    return {
+        title:"Empleados"
+    };
 }
-
 export default function Empleados(){
     return(
-        <h2>Empleados</h2>
+        <>
+        <Outlet/>
+        </>
     );
 }

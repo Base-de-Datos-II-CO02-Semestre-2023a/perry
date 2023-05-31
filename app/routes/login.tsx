@@ -5,7 +5,6 @@ import Button from "~/components/Button";
 import ErrorDialog from "~/components/ErrorDialog";
 import TextField from "~/components/TextField";
 import loginStylesUrl from "~/styles/login.css";
-
 export const links:LinksFunction = () => {
     return [{ rel: "stylesheet", href: loginStylesUrl }];
 }
@@ -17,11 +16,8 @@ import { badRequest } from "~/utils/request.server";
 
 
 export const loader: LoaderFunction = async ({ request }:LoaderArgs) => {
-    const [token] = await getUserSession(request);
-    console.log(token);
-
+    const [token, user, puesto] = await getUserSession(request);
     if (token) {
-        console.log("redirecting");
         return redirect('/');
     }
     return null;

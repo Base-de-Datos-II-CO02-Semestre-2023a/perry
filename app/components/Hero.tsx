@@ -7,7 +7,7 @@ export default function Hero(){
 
     const updateTime = () =>{
         setTime(new Date().toLocaleTimeString());
-        console.log(time);
+        
     };
 
     useEffect(() => {
@@ -20,8 +20,8 @@ export default function Hero(){
         <header className="hero">
             <Title/>
             <div className="dataContainer">
-                <InformacionGeneral label="Fecha" content={new Date().toLocaleDateString()} type="filled"/>
-                <InformacionGeneral label="Hora" content={time} type="filled"/>
+                <InformacionGeneral label="Fecha" content={new Date().toLocaleDateString()} type="filled" variant="default"/>
+                <InformacionGeneral label="Hora" content={time} type="filled" variant="default"/>
             </div>
         </header>
     )

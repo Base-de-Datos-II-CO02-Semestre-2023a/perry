@@ -3,7 +3,7 @@
 @import url(./typography.module.css);
 @import url(./elevations.module.css);
 
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: light){
     :root {
         --md-sys-color-primary: var(--md-sys-color-primary-light);
         --md-sys-color-on-primary: var(--md-sys-color-on-primary-light);
@@ -62,7 +62,7 @@
        
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
     :root {
         --md-sys-color-primary: var(--md-sys-color-primary-dark);
         --md-sys-color-on-primary: var(--md-sys-color-on-primary-dark);

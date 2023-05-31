@@ -25,6 +25,7 @@ form{
     color: var(--md-sys-color-on-surface);
 }
 
+
 .textField input::placeholder{
     color: var(--md-sys-color-on-surface-variant);
 }
