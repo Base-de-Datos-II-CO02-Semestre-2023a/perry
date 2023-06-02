@@ -10,14 +10,6 @@
     overflow: hidden;
 }
 
-
-.informacion.filled{
-    background-color: var(--md-sys-color-surface-container);
-}
-.informacion.transparent{
-    background-color: transparent;
-}
-
 .informacion.line{
     display: flex;
     flex-direction: row;
@@ -29,6 +21,16 @@
     height: fit-content;
     width: fit-content;
 }
+
+
+.informacion.filled{
+    background-color: var(--md-sys-color-surface-container);
+}
+.informacion.transparent{
+    background-color: transparent;
+}
+
+
 
 .informacion label, .informacion p{
     margin: 0;
@@ -56,9 +58,37 @@
 
 .informacion.cantidad.grande{
     width: fit-content;
-    height: 100%;
+    height:100%;
     min-height: fit-content;
     min-width:300px;
     width: 300px;
     justify-content: center;
+}
+
+.informacion.dinero.grande{
+    gap:-10px;
+}
+
+.informacion.dinero.positivo{
+    background-color: var(--md-sys-color-ok-container);
+}
+
+.informacion.dinero.positivo p{
+    color: var(--md-sys-color-on-ok-container);
+}
+
+.informacion.dinero.positivo label{
+    color: var(--md-sys-color-ok);
+}
+
+.informacion.dinero.negativo{
+    background-color: var(--md-sys-color-error-container);
+}
+
+.informacion.dinero.negativo p{
+    color: var(--md-sys-color-on-error-container);
+}
+
+.informacion.dinero.negativo label{
+    color: var(--md-sys-color-error);
 }

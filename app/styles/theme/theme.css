@@ -58,6 +58,13 @@
 
         --md-sys-color-disabled-container:  var(--md-sys-color-disabled-container-light);
 
+        --md-sys-color-ok:var(--md-custom-color-ok-light);
+        --md-sys-color-on-ok:var(--md-custom-color-on-ok-light);
+        --md-sys-color-ok-container:var(--md-custom-color-ok-container-light);
+        --md-sys-color-on-ok-container:var(--md-custom-color-on-ok-container-light);
+
+
+
        }
        
 }
@@ -115,6 +122,11 @@
         --md-sys-color-surface-dim: var(--md-sys-color-surface-dim-dark);
         
         --md-sys-color-disabled-container: var(--md-sys-color-disabled-container-dark);
+
+        --md-sys-color-ok: var(--md-custom-color-ok-dark);
+        --md-sys-color-on-ok: var(--md-custom-color-on-ok-dark);
+        --md-sys-color-ok-container: var(--md-custom-color-ok-container-dark);
+        --md-sys-color-on-ok-container: var(--md-custom-color-on-ok-container-dark);
 
     }
 }

@@ -15,7 +15,7 @@ export type Row = {
  * @param props 
  * @returns 
  */
-export default function Tabla(props:{headers:Header[],rows:Row[], onRowSelected:(index:any)=>void}) {
+export default function Tabla(props:{headers:string[],rows:Row[], onRowSelected:(index:any)=>void}) {
 
     return(
         <div className="tableContainer">
@@ -23,9 +23,7 @@ export default function Tabla(props:{headers:Header[],rows:Row[], onRowSelected:
                 <thead>
                     <tr className="header">
                         {props.headers.map((header,index) => {
-                            return <th className="hader-small on-surface-variant-text" style={{
-                                width: header.size,
-                            }} key={index}>{header.name}</th>
+                            return <th className="hader-small on-surface-variant-text"  key={index}>{header}</th>
                         })}
                     </tr>
                 </thead>
@@ -34,7 +32,7 @@ export default function Tabla(props:{headers:Header[],rows:Row[], onRowSelected:
                         props.rows.map((row,index) => {
                             return <tr key={row.id} onClick={()=>props.onRowSelected(row.id)}>
                                 {row.data.map((cell,index) => {
-                                    return <td className="body-large on-surface-variant-text" key={index}>{cell}</td>
+                                    return <td className="body-large on-surface-variant-text" key={index} >{cell}</td>
                                 })}
                             </tr>     
                         })

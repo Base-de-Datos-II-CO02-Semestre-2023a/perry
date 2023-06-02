@@ -22,12 +22,16 @@ button{
     transition: opacity 0.2s ease-in-out;
 }
 
+button.no-label{
+    padding: 10px 10px;
+}
+
 button .state-layer{
     opacity: var(--md-sys-opacity-0);
 }
 
 
-button .material-symbols-outlined{
+button  .material-symbols-outlined.button{
     font-size: 18px;
 }
 

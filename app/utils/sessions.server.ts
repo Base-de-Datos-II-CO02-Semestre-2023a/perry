@@ -44,7 +44,7 @@ export async function login(username: string, password: string, redirectTo: stri
 
   var raw = JSON.stringify({
     "password": password,
-    "rfc": username
+    "rfc": username,
   });
 
   var requestOptions:RequestInit = {
@@ -76,6 +76,7 @@ export async function login(username: string, password: string, redirectTo: stri
   let token = data.jwt_token;
   let user = data.user;
   let puesto = data.puesto;
+  
 
   return createUserSession(token, user, puesto, redirectTo);
 

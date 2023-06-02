@@ -33,6 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   let root = "";
   if (token) {
     switch (puesto) {
+      
       case 'Admin':
          root = 'admin';
          break;
@@ -49,6 +50,7 @@ export const loader: LoaderFunction = async ({ request }) => {
         root = 'finanzas';
         break;
     }
+
     return {root}
   }
   if(request.url.includes('/login') || request.url.includes('/asistencia')){

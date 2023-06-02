@@ -1,5 +1,5 @@
 import { LoaderArgs, LoaderFunction } from "@remix-run/node";
-import { useLoaderData, useMatches, useNavigate } from "@remix-run/react";
+import { useLoaderData, useMatches, useNavigate, useRouteLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
 import ExtendedFAB from "~/components/ExtendedFAB";
 import InformacionCantidad from "~/components/InformacionCantidad";
@@ -44,14 +44,8 @@ export default function Index(){
     const openEmpleado = (id:string) => {
         navigate(`/rh/empleados/${id}?redirectTo=%2f`);
     };
-    const headers: Header[] = [{
-        name:"Nombre",
-        size:"100%",
-    },
-    {
-        name:"Prod",
-        size:"fit-content",
-    }];
+    const headers= ["Nombre", "Prod"];
+    
     return (
         <>
         <div className="actionsBar">

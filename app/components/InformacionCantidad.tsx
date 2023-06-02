@@ -6,6 +6,5 @@ export default function (props:{variant:"pequeño"|"mediano"|"grande", type:"fil
             <p className={pClass}>{props.cantidad}</p>
             <label className={labelClass}>{props.title}</label>
         </div>
-
     );
 }
