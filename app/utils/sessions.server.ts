@@ -2,7 +2,7 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import { badRequest } from "./request.server";
 import { fetch } from "@remix-run/node";
 import {url} from "./api.config";
-import { Empleado } from "./empleados.server";
+import { Empleado } from "../types/Empleado";
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -16,11 +16,11 @@ const storage = createCookieSessionStorage({
     // normally you want this to be `secure: true`
     // but that doesn't work on localhost for Safari
     // https://web.dev/when-to-use-local-https/
-    secure: process.env.NODE_ENV === "production",
+    
     secrets: [sessionSecret],
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 ,
     httpOnly: true,
   },
 });
@@ -34,9 +34,10 @@ const storage = createCookieSessionStorage({
  */
 export async function login(username: string, password: string, redirectTo: string){
   if (typeof username !== 'string' || typeof password !== 'string') {
-    return badRequest({
-        formError: 'Los datos enviados no son válidos'
-    });
+    return {
+      status:400,
+      detail: "Datos ingresados no validos"
+    };
   }
 
   var myHeaders = new Headers();
@@ -59,18 +60,20 @@ export async function login(username: string, password: string, redirectTo: stri
       let request = fetch(`${url}/auth/login`, requestOptions);
       let response = await request;
       data = await response.json();
+      console.log(data)
       status = response.status;
   } catch (error:any) {
-      return badRequest({
-        formError: "Error al conectarse al servidor"
-      });
+      return {
+        status: 500,
+        formError: "Error desconocido"
+      };
   }
 
   if (status !== 200) {
-      return badRequest({
+      return{
           status:status,
-          formError:data.error
-      });
+          formError:data.detail
+      };
   }
 
   let token = data.jwt_token;

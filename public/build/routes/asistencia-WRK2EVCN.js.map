@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:routes/asistencia.tsx?browser", "../../../app/routes/asistencia.tsx"],
+  "sourcesContent": ["export { default } from \"./routes/asistencia.tsx\";", "export default function Asistencia() {\r\n    return (\r\n        <div>\r\n            <h1>Asistencia</h1>\r\n        </div>\r\n    );\r\n}\r\n"],
+  "mappings": ";;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;;;ACAA;AAAA;AAAA;AAAA;AAAA;AAGY;AAHG,SAAR,aAA8B;AACjC,SACI,mDAAC,SACG,6DAAC,QAAG,0BAAJ;AAAA;AAAA;AAAA;AAAA,SAAc,KADlB;AAAA;AAAA;AAAA;AAAA,SAEA;AAER;",
+  "names": []
+}

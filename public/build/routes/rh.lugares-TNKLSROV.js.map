@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:routes/rh.lugares.tsx?browser", "../../../app/routes/rh.lugares.tsx"],
+  "sourcesContent": ["export { default } from \"./routes/rh.lugares.tsx\";", "import { LoaderArgs, LoaderFunction } from \"@remix-run/node\";\r\n\r\nexport const loader: LoaderFunction = async ({ request, params }:LoaderArgs) => {\r\n    \r\n    return {\r\n        title:\"Lugares\"\r\n    };\r\n}\r\nexport default function Lugares() {\r\n}"],
+  "mappings": ";;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;;;ACAA;AAAA;AAAA;AAAA;AAAA;AAQe,SAAR,UAA2B;AAClC;",
+  "names": []
+}

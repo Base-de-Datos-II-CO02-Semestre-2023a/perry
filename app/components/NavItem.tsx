@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 export default function NavItem(props:{name:string, link:string, icon:string, end:boolean|undefined}){
     return(
         <>
-        <NavLink prefetch="render" to = {props.link} className={({isActive, isPending})=>"navItem "+(isPending?"pending":isActive?"selected":"")} end={props.end}>
+        <NavLink prefetch="render" to = {props.link} className={({isActive, isPending})=>"navItem "+(isPending?"selected":isActive?"selected":"")} end={props.end}>
             
 
             {({isActive, isPending}) =>(

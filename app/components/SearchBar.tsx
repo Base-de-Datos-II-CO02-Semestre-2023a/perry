@@ -1,23 +1,29 @@
-import { useSubmit } from "@remix-run/react";
+import { Form, useSubmit } from "@remix-run/react";
 import Button from "./Button";
 import InputMenu from "./InputMenu";
 import { Option } from "./InputMenu";
 import { LegacyRef, useRef } from "react";
 
-export default function SearchBar(props:{label:string, collapsed?:boolean, searchSuggestFunction:(value:string)=>Option[], maxLenght?:number}){
+export default function SearchBar(props:{label:string, collapsed?:boolean, searchSuggestFunction?:(value:string)=>Option[], maxLenght?:number, value?:string}){
     
-    const btnRef = useRef<HTMLFormElement>()
+    const formRef = useRef<HTMLFormElement>(null)
     const submit = useSubmit();
     return(
-        <form name="search" method="get" className="searchBar" onChange={(e)=>{submit(e.currentTarget)}} ref={btnRef}>
+        <Form reloadDocument={false}
+            name="search" 
+            method="get" 
+            className="searchBar" 
+            onChange={(e)=>{!props.searchSuggestFunction && submit(e.currentTarget)}} 
+            ref={formRef}>
             <InputMenu 
                 label={props.label} 
                 name={"searchValue"} 
                 variant={"outlined"} 
                 suggestFunction={props.searchSuggestFunction}
                 maxLenght={props.maxLenght}
-                onEnterPressed={()=>btnRef.current?.submit()}
-                onOptionClicked={()=>btnRef.current?.submit()}
+                onEnterPressed={()=>formRef.current?.submit()}
+                onOptionClicked={()=>formRef.current?.submit()}
+                initialValue={props.value}
             />
             {
                 props.collapsed ? <Button type="submit" 
@@ -35,7 +41,7 @@ export default function SearchBar(props:{label:string, collapsed?:boolean, searc
                     icon="search"
                 />
             }
-        </form> 
+        </Form> 
         
         
     );

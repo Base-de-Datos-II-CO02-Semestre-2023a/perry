@@ -1,9 +1,31 @@
-import { ChangeEventHandler, InputHTMLAttributes, useRef } from "react";
+import { ChangeEventHandler, InputHTMLAttributes, useRef, useState } from "react";
 import Icon from "./Icon";
+import { pattern } from "isbot";
 
 
-export default function TextField(props: {icon?:string, label: string, name: string, type: string, variant: "outlined", onChange?: ChangeEventHandler<HTMLInputElement>, isValid: boolean, min?:string|number, max?:string, fileAccept?:string, maxLength?:number, minLenght?:number, onEnterPressed?:(value:string)=>void, value?:string, onArrowKeyPressed?:(event:any)=>void, onClick?:()=>void}) {
-    const descRef = useRef<HTMLInputElement>();
+export default function TextField(props: {
+    icon?:string, 
+    label: string, 
+    name: string, 
+    type: string, 
+    variant: "outlined", 
+    onChange?: ChangeEventHandler<HTMLInputElement>, 
+    isValid?: boolean, 
+    min?:string|number, 
+    max?:string|number, 
+    fileAccept?:string, 
+    maxLength?:number, 
+    minLenght?:number, 
+    onEnterPressed?:(value:string)=>void, value?:string, 
+    onArrowKeyPressed?:(event:any)=>void, 
+    onClick?:()=>void,
+    autoComplete?:string,
+    pattern?:string
+    autoCapitalize?:string
+}) {
+    const [isValid, setValid] = useState( props.isValid===undefined?true:props.isValid)
+    const descRef = useRef<HTMLInputElement>(null);
+
     const onEnterPressed = (event:any)=>{
         if(event.key == "Enter"){
             if(props.onEnterPressed){
@@ -17,7 +39,7 @@ export default function TextField(props: {icon?:string, label: string, name: str
         
     }
     return (
-        <div className={"textField "+props.variant+" "+(props.isValid?"":"error")} onClick={props.onClick}>
+        <div className={"textField "+props.variant+" "+(isValid?"":"error")} onClick={props.onClick}>
             
             {
                 (props.icon && props.type != "date" )&& <Icon 
@@ -43,7 +65,10 @@ export default function TextField(props: {icon?:string, label: string, name: str
                 maxLength={props.maxLength} 
                 minLength={props.minLenght} 
                 onKeyDown={onEnterPressed} 
-                value={props.value}/>
+                value={props.value}
+                autoComplete={props.autoComplete? props.autoComplete:"off"}
+                pattern={props.pattern}
+            />
         </div>
     );
 }

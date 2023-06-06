@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:routes/rh.empleados.tsx?browser", "../../../app/routes/rh.empleados.tsx"],
+  "sourcesContent": ["export { default } from \"./routes/rh.empleados.tsx\";", "import { LinksFunction, LoaderArgs, LoaderFunction } from \"@remix-run/node\";\r\nimport { Outlet } from \"@remix-run/react\";\r\n\r\nexport const loader: LoaderFunction = async ({ request, params }:LoaderArgs) => {\r\n    \r\n        \r\n    return {\r\n        title:\"Empleados\"\r\n    };\r\n}\r\nexport default function Empleados(){\r\n    return(\r\n        <>\r\n        <Outlet/>\r\n        </>\r\n    );\r\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;;;ACAA;AAAA;AAAA;AAAA;AAAA;AAYQ;AAFO,SAAR,YAA4B;AAC/B,SACI,sFACA,6DAAC,YAAD;AAAA;AAAA;AAAA;AAAA,SAAO,KADP;AAAA;AAAA;AAAA;AAAA,SAEA;AAER;",
+  "names": []
+}

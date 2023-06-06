@@ -5,6 +5,12 @@ form{
     gap: 24px;
     align-items: center;
 }
+
+@media (prefers-color-scheme: dark) {
+    .textField input{
+        color-scheme: dark;
+    }
+}
 .textField{
     position:relative;
     display: flex;
@@ -19,7 +25,6 @@ form{
     border-radius: 4px;
     color: inherit;
 }
-
 .textField input{
     position: relative;
     height: 100%;
@@ -28,6 +33,10 @@ form{
     border: none;
     background-color: transparent;
     color: var(--md-sys-color-on-surface);
+}
+
+.textField input::-webkit-inner-spin-button{
+    display: none;
 }
 
 .textField input::-webkit-file-upload-button{
@@ -133,3 +142,4 @@ form{
 .inputMenu option.last{
     border-bottom: none;
 }
+

@@ -6,15 +6,29 @@ export type Option = {
     value:string
 }
 
-export default function InputMenu(props:{icon?:string, label:string, name:string, variant:"outlined"|"filled", maxLenght?:number, suggestFunction?:(value:string)=>Option[], initialSuggestions?:Option[], selectOnly?:boolean, onOptionClicked?: (val:string)=>void, onEnterPressed?:()=>void}){
+export default function InputMenu(props:{
+    icon?:string, 
+    label:string, 
+    name:string, 
+    variant:"outlined"|"filled", 
+    maxLenght?:number, 
+    suggestFunction?:(value:string)=>Promise<Option[]> , 
+    initialSuggestions?:Option[], 
+    selectOnly?:boolean, 
+    onOptionClicked?: (val:string)=>void, 
+    onEnterPressed?:()=>void, initialValue?:string 
+}){
     var [suggestions, setSuggestions] = useState<Option[]>( props.initialSuggestions?props.initialSuggestions:[]);
-    var [value,setValue] = useState<string>("");
+    var [value,setValue] = useState<string>(props.initialValue?props.initialValue:"");
     const [active, setActive] = useState<number>(0);
 
-    const onInputChange = (event:any)=>{
+    const onInputChange = async (event:any)=>{
         if (!props.selectOnly){
             setValue(event.target.value);
-            props.suggestFunction && setSuggestions(props.suggestFunction(event.target.value));
+            if(props.suggestFunction){
+                let suggest = await props.suggestFunction(event.target.value);
+                setSuggestions(suggest);
+            }
         }
         event.target.value == "" && setSuggestions([]);
     }
@@ -49,7 +63,19 @@ export default function InputMenu(props:{icon?:string, label:string, name:string
     }
     return(
         <div className="inputMenu">
-            <TextField icon={props.icon} label={props.label} name={props.name} type="search" isValid={true} variant="outlined" maxLength={props.maxLenght} onChange={onInputChange} onEnterPressed={onEnterPressed} onArrowKeyPressed={onArrowKeyPressed} value={value} onClick={()=>setSuggestions(props.initialSuggestions || [])}/>
+            <TextField icon={props.icon} 
+                label={props.label} 
+                name={props.name} 
+                type="search" 
+                isValid={true} 
+                variant="outlined" 
+                maxLength={props.maxLenght} 
+                onChange={onInputChange} 
+                onEnterPressed={onEnterPressed} 
+                onArrowKeyPressed={onArrowKeyPressed} 
+                value={value} 
+                onClick={()=>setSuggestions(props.initialSuggestions || [])}
+            />
             {
                 suggestions.length > 0 && <div className="column card suggest">
                     {

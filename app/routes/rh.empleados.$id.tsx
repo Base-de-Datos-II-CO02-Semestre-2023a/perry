@@ -1,11 +1,12 @@
 import { LoaderArgs, LoaderFunction, json, redirect } from "@remix-run/node";
 import { useLoaderData, useMatches, useSearchParams } from "@remix-run/react";
 import { useEffect } from "react";
-import { Empleado, getEmpleadoByRfc } from "~/utils/empleados.server";
+import { getEmpleado } from "~/utils/empleados.server";
+import { Empleado } from "~/types/Empleado";
 
 export const loader: LoaderFunction = async ({ request, params }:LoaderArgs) => {
     
-    const empleado = await getEmpleadoByRfc(request, params.rfc)as Empleado;
+    const empleado = await getEmpleado(request, params.id)as Empleado;
     
     if (empleado) return {
         empleado,
@@ -22,6 +23,7 @@ export default function Empleado(){
    
     return(
         <h1>
+            
         </h1>
         
     );

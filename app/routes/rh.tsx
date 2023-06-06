@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction, json, redirect } from "@remix-run/node";
+import { LinksFunction, LoaderArgs, LoaderFunction, json, redirect } from "@remix-run/node";
 import { Link, Outlet, useMatches, useSearchParams } from "@remix-run/react";
 import Hero from "~/components/Hero";
 import NavigationDrawer from "~/components/NavigationDrawer";

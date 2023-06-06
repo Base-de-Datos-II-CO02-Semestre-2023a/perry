@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:routes/rh.empleados.$id.tsx?browser", "../../../app/routes/rh.empleados.$id.tsx"],
+  "sourcesContent": ["export { default } from \"./routes/rh.empleados.$id.tsx\";", "import { LoaderArgs, LoaderFunction, json, redirect } from \"@remix-run/node\";\r\nimport { useLoaderData, useMatches, useSearchParams } from \"@remix-run/react\";\r\nimport { useEffect } from \"react\";\r\nimport { getEmpleado } from \"~/utils/empleados.server\";\r\nimport { Empleado } from \"~/types/Empleado\";\r\n\r\nexport const loader: LoaderFunction = async ({ request, params }:LoaderArgs) => {\r\n    \r\n    const empleado = await getEmpleado(request, params.id)as Empleado;\r\n    \r\n    if (empleado) return {\r\n        empleado,\r\n        title:empleado.nombre,\r\n        redirect:\"/rh/empleados\"\r\n    };\r\n    return{\r\n        empleado\r\n    }\r\n}\r\n\r\nexport default function Empleado(){\r\n    const matches = useMatches()\r\n   \r\n    return(\r\n        <h1>\r\n            \r\n        </h1>\r\n        \r\n    );\r\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;;;ACAA;AAAA;AAAA;AAAA;AAAA;AAGA,uBAA4B;AAqBpB;AAJO,SAAR,WAA2B;AAC9B,QAAM,UAAU,WAAW;AAE3B,SACI,mDAAC,UAAD;AAAA;AAAA;AAAA;AAAA,SAEA;AAGR;",
+  "names": []
+}

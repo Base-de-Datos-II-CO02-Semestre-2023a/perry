@@ -8,41 +8,62 @@ import { Option } from "~/components/InputMenu";
 import InputMenu from "~/components/InputMenu";
 import TextField from "~/components/TextField";
 import SearchBar from "~/components/SearchBar";
-import { useSearchParams } from "@remix-run/react";
+import { useActionData, useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 import Tabla, { Header, Row } from "~/components/Tabla";
+import { buscarEmpleadosPorRFC, getContarEmpleadosVacaciones, getEmpleados } from "~/utils/empleados.server";
+import { Empleado, EmpleadoEncontrado } from "~/types/Empleado";
 export const loader: LoaderFunction = async ({ request }:LoaderArgs) => {
     const url = new URL(request.url);
     const searchParams = url.searchParams;
+    const searchValue = searchParams.get("searchValue");
+    let data : Row[] = [];
+    let empleados :EmpleadoEncontrado[]=[];
+
+    if(!searchValue){
+       
+        empleados = await getEmpleados(request);
+    } else {
+        empleados = await buscarEmpleadosPorRFC(request, searchValue);
+        
+    }
+
+    data = empleados.map((empleado)=>{
+        return {
+            id:empleado.id,
+            data:[empleado.rfc,empleado.nombre,empleado.puesto,empleado.salario.toString(),empleado.indiceProductividad.toString(),empleado.idLugar,empleado.fechaDeIngreso.toLocaleDateString() ]
+        }
+    })
+
+    
 
     return {
-        title:"Empleados"
+        searchValue,
+        title:"Empleados",
+        data
     };
 }
 export default function Index(){
     const [searchParams]=useSearchParams()
     const searchValue = searchParams.get("searchValue")
     const headers = ["RFC","Nombre","Puesto","Sueldo", "Prod", "Lugar", "Fecha Ingreso"]
-
+    const navigate = useNavigate()
+    const loaderData = useLoaderData<typeof loader>();
+    const openEmpleado = (id:string) => {
+        navigate(`/rh/empleados/${id}`);
+    };
     const rows:Row[]=[{
         id:"ejemploderfc",
         data:["ejemploderfc23","Ejemplo de nombre","Ejemplo de puesto","$1000","0.95","Ejemplo de lugar","Ejemplo de fecha"]
     }]
 
-    const suggestEmpleados = (empleado:string)=>{
-        return [{
-            name:"ejemploderfc",
-            value:"ejemploderfc"
-        }] as Option[]
-    }
+  
 
     return(
-        <>  
-            <SearchBar label={"Buscar empleados por RFC"} searchSuggestFunction={suggestEmpleados}
-                maxLenght={13}
+        <>
+            <SearchBar label={"Buscar empleados por RFC, nombre o correo"}
+                value={searchValue?searchValue:""}
             />
-            <Tabla headers={headers} rows={rows} onRowSelected={function (index: any): void {
-                throw new Error("Function not implemented.");
-            } }/>
+            <Tabla headers={headers} rows={loaderData.data} onRowSelected={openEmpleado }/>
         </>
     )
 }

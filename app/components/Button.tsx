@@ -1,7 +1,11 @@
 
 import { LegacyRef } from 'react';
 import Icon from './Icon';
-
+/**
+ * Renderiza un boton, tiene distintos tipos
+ * @params className: string, icon: string, disabled: boolean, color: string, label: string, type: "button" | "submit" | "reset" , variant:"filled" | "outlined" | "text" | "elevated" | "text" | "tonal", onClick:()=>void, ref:LegacyRef<HTMLButtonElement>   
+ * @returns 
+ */
 export default function Button(props: { className?:string,icon?:string,disabled?:boolean, color?: string, label?: string, type: "button" | "submit" | "reset" , variant:"filled" | "outlined" | "text" | "elevated" | "text" | "tonal", onClick?:()=>void, ref?:LegacyRef<HTMLButtonElement>}) {
     
     return (

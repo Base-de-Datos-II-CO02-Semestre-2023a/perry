@@ -29,8 +29,9 @@ export const action = async ({ request }:ActionArgs) => {
     const password = form.get('password')as string;
     const redirectTo = form.get('redirectTo') as string;
     if(user != '' && password != ''){
-        var response = login(user,password,redirectTo);
-        return await response;
+        var response = await login(user,password,redirectTo);
+        console.log(response)
+        return response;
     }
     return {formError:"Favor de llenar los campos"}
     
@@ -40,18 +41,20 @@ export const action = async ({ request }:ActionArgs) => {
 export default function Login() {
     const [isRfcValid, setIsRfcValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(true);
-    const [messageError, setMessageError] = useState('');
-
+    const [rfc, setRfc] = useState('');
     const actionData = useActionData<typeof action>();
+    const [messageError, setMessageError] = useState(actionData?.formError || '');
+
     const [searchParams] = useSearchParams();    
 
     function validateRfc(event : React.ChangeEvent<HTMLInputElement>) {
         let rfc = event.target.value;
+        setRfc(event.target.value.toUpperCase());
         setMessageError('')
         if (rfc.length === 0) {
             setIsRfcValid(false);
             setMessageError('El RFC no puede estar vacío');
-        } else if (rfc.length < 9) {
+        } else if (rfc.length < 12) {
             setIsRfcValid(false);
             setMessageError('El RFC debe tener al menos 12 caracteres');
         } else {
@@ -74,7 +77,9 @@ export default function Login() {
             setMessageError('');
         }
     }
-    
+
+    const upperCase = (event: React.ChangeEvent<HTMLInputElement>) => {
+    }
     return(
         <>
             <h2 className="display-large">Inicio de sesión</h2>
@@ -82,9 +87,8 @@ export default function Login() {
             <form method="post">
                 <input type="hidden" name="redirectTo" value={searchParams.get('redirectTo') || '/'} readOnly />
                 {messageError && <ErrorDialog message={messageError} />}
-                {(actionData?.formError && !messageError) && <ErrorDialog message={actionData.formError} />}
-                <TextField label="RFC" name="user" type="text" variant={"outlined"} onChange={validateRfc} isValid={isRfcValid}/>
-                <TextField label="Contraseña" name="password" type="password" variant="outlined" onChange={validatePassword} isValid={isPasswordValid}/>
+                <TextField label="RFC" name="user" type="text" variant={"outlined"} onChange={validateRfc} isValid={isRfcValid} autoComplete="off" value={rfc}/>
+                <TextField label="Contraseña" name="password" type="password" variant="outlined" onChange={validatePassword} isValid={isPasswordValid} autoComplete="current-password"/>
                 <Button type="submit" variant="filled" label="Iniciar sesión" className="primary" color="primary" disabled={!(isPasswordValid&&isRfcValid)} />
             </form>
         </>
