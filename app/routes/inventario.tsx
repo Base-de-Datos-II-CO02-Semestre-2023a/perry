@@ -1,23 +1,14 @@
-import { LinksFunction, LoaderArgs, LoaderFunction, json, redirect } from "@remix-run/node";
-import { Link, Outlet, useMatches, useSearchParams } from "@remix-run/react";
+import { LinksFunction, LoaderArgs, LoaderFunction } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
 import Hero from "~/components/Hero";
 import NavigationDrawer from "~/components/NavigationDrawer";
-import Title from "~/components/Title";
-
-import rhStylesUrl from "~/styles/rh.css";
-
 
 export const loader: LoaderFunction = async ({ request, params }:LoaderArgs) => {
     
         
     return {
-        title:"Recursos Humanos"
+        title:"Inventario"
     };
-}
-
-
-export const links:LinksFunction = () => {
-    return [{rel:"stylesheet", href:rhStylesUrl}]
 }
 
 export type NavItemType ={
@@ -30,13 +21,9 @@ export type NavItemType ={
 export default function rh(){
     let links:NavItemType[] = [{
         title:"Inicio",
-        link:"/rh",
+        link:"/inventario",
         icon:"home",
         end:true
-    },{ 
-        title:"Empleados",
-        link:"./empleados",
-        icon:"badge",
     },{
         title:"Lugares",
         link:"./lugares",
@@ -44,10 +31,8 @@ export default function rh(){
     }]
 
     return(
-        
-       
         <>
-            <NavigationDrawer links={links}/>
+            <NavigationDrawer links={links} />
             <main>
                 <Hero/>
                 <Outlet />

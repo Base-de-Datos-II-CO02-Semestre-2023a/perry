@@ -132,6 +132,11 @@ main{
     width: fit-content;
 }
 
+.row.center{
+    justify-content: center;
+    align-items: center;
+}
+
 .row.fit{
     min-height: fit-content;
     height: fit-content;
