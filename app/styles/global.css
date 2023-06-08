@@ -137,6 +137,10 @@ main{
     align-items: center;
 }
 
+.chartContainer{
+    max-width: 1100px;
+}
+
 .row.fit{
     min-height: fit-content;
     height: fit-content;
