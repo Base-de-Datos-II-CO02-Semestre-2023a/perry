@@ -25,6 +25,7 @@
 .fab.extended{
     width: fit-content;
     height: fit-content;
+    min-width: fit-content;
     padding: 16px 20px 16px 16px;
     border-radius: 16px;
    

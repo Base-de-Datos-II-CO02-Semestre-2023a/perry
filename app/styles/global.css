@@ -65,6 +65,7 @@ main{
     justify-content: flex-start;
     align-items: flex-start;
     height: 100vh;
+    max-width: 84vw;
     padding: 48px 24px 24px 24px;
     gap: 24px;
     overflow: hidden;
@@ -85,35 +86,54 @@ main{
 .actionsBar{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 24px;
+    row-gap: 10px;
     
 }
 
 
+
 .row{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
     flex-grow: 1;
+    min-height: fit-content;
+    max-height: 100%;
     width: 100%;
     overflow: hidden;
-    gap: 24px;
-    
+    column-gap: 24px;
+}
+
+.no-grow{
+    flex-grow: unset;
+}
+.wrap{
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 10px;
 }
 .column{
-    width: 100%;
+    position: relative;
+    max-width: 100%;
+    min-width: fit-content;
     height: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 24px;
+    flex-grow: 1;
     overflow: hidden;
 }
+
 
 .card {
     display: flex;
@@ -129,12 +149,10 @@ main{
 }
 
 .column.fit{
-    min-width: fit-content;
     width: fit-content;
 }
 
 .row.fit{
-    min-height: fit-content;
     height: fit-content;
 }
 
@@ -160,3 +178,97 @@ hr{
     border: none;
     margin: 0;
 }
+
+.grow1{
+    flex-grow: 1;
+}
+
+.grow2{
+    flex-grow: 2;
+}
+
+
+.grid-4-3{
+    position: relative;
+    max-height: 100%;
+    flex-grow: 1;
+    min-height: fit-content;
+    width: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(4, calc( 25% - 18px));
+    grid-template-rows: repeat(3,calc(33.33334% - 16PX));
+    grid-gap: 24px;
+}
+
+.grafico{
+    display: flex;
+    height: 100%;
+    min-height: fit-content;
+    min-width: 150px;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+.grid-4-3 #a{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.grid-4-3 #b{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+} 
+.grid-4-3 #c{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.grid-4-3 #d{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+.grid-4-3 #e{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.grid-4-3 #f{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.grid-4-3 #g{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.grid-4-3 #h{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+
+
+
+

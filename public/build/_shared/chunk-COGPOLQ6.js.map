@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../app/components/InformacionGeneral.tsx"],
-  "sourcesContent": ["export default function InformacionGeneral(props:{label:string, content:string, variant:\"line\"|\"default\", type:\"filled\"|\"transparent\"}) {\r\n    return(\r\n        <div aria-disabled className={\"informacion general \"+(props.type)+\" \"+props.variant}>\r\n            <label className=\"label-small\">{props.label}</label>\r\n            <p className=\"title-small\">{props.content}</p>\r\n        </div>\r\n        \r\n    )\r\n}"],
-  "mappings": ";;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGY;AAHG,SAAR,mBAAoC,OAA6F;AACpI,SACI,mDAAC,SAAI,iBAAa,MAAC,WAAW,yBAAwB,MAAM,OAAM,MAAI,MAAM,SACxE;AAAA,uDAAC,WAAM,WAAU,eAAe,gBAAM,SAAtC;AAAA;AAAA;AAAA;AAAA,WAA4C;AAAA,IAC5C,mDAAC,OAAE,WAAU,eAAe,gBAAM,WAAlC;AAAA;AAAA;AAAA;AAAA,WAA0C;AAAA,OAF9C;AAAA;AAAA;AAAA;AAAA,SAGA;AAGR;",
-  "names": []
-}

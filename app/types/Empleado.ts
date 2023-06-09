@@ -17,6 +17,23 @@ export type Empleado = {
     password?:string
 };
 
+export type EmpleadoInfo = {
+    id?: number;
+    nombre: string;
+    rfc: string;
+    puesto: string;
+    nss: number;
+    correo: string;
+    telefono: number;
+    salario: number;
+    diasFin?:number;
+    direccion: string;
+    nombreLugar: string;
+    diasInicio?: number;
+    indiceProductividad: number;
+
+};
+
 export type EmpleadoEncontrado = {
     id: number;
     nombre: string;

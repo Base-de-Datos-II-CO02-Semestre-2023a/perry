@@ -81,11 +81,11 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
             })
           ), pipe(body);
         },
-        onShellError(error) {
-          reject(error);
+        onShellError(error2) {
+          reject(error2);
         },
-        onError(error) {
-          responseStatusCode = 500, console.error(error);
+        onError(error2) {
+          responseStatusCode = 500, console.error(error2);
         }
       }
     );
@@ -121,11 +121,11 @@ function handleBrowserRequest(request, responseStatusCode, responseHeaders, remi
             })
           ), pipe(body);
         },
-        onShellError(error) {
-          reject(error);
+        onShellError(error2) {
+          reject(error2);
         },
-        onError(error) {
-          console.error(error), responseStatusCode = 500;
+        onError(error2) {
+          console.error(error2), responseStatusCode = 500;
         }
       }
     );
@@ -143,7 +143,7 @@ __export(root_exports, {
 var import_node4 = require("@remix-run/node"), import_react2 = require("@remix-run/react");
 
 // app/styles/global.css
-var global_default = "/build/_assets/global-YYCA4D7A.css";
+var global_default = "/build/_assets/global-WNN443HC.css";
 
 // app/utils/sessions.server.ts
 var import_node2 = require("@remix-run/node"), import_node3 = require("@remix-run/node");
@@ -713,7 +713,7 @@ async function getEmpleado(request, id) {
   let requestOptions = await requestOptionsGET(request), status = 0;
   try {
     let request2 = await (0, import_node5.fetch)(`${url}/empleados/${id}`, requestOptions), response = await request2.text(), data = JSON.parse(response);
-    return status = request2.status, data.fechaDeIngreso = data.fechaDeIngreso && new Date(data.fechaDeIngreso), data.fechaDeNacimiento = new Date(data.fechaDeNacimiento), data;
+    return status = request2.status, data;
   } catch {
     return null;
   }
@@ -770,11 +770,11 @@ async function registrarEmpleado(request, empleado) {
       status: data.status,
       error: data.detail
     };
-  } catch (error) {
+  } catch (error2) {
     return {
       title: "Error Interno",
       status: 500,
-      error
+      error: error2
     };
   }
 }
@@ -791,12 +791,21 @@ async function nuevoContrato(request, contrato) {
       status: data.status,
       error: data.detail
     };
-  } catch (error) {
+  } catch (error2) {
     return {
       title: "Error Interno",
       status: 500,
-      error
+      error: error2
     };
+  }
+}
+async function getHistorialProductividad(request, id) {
+  let requestOptions = await requestOptionsGET(request), status = 0;
+  try {
+    let request2 = await (0, import_node5.fetch)(`${url}/empleados/productividad/${id}`, requestOptions), response = await request2.text(), data = JSON.parse(response);
+    return status = request2.status, data;
+  } catch {
+    return null;
   }
 }
 
@@ -815,10 +824,7 @@ var import_jsx_dev_runtime9 = require("react/jsx-dev-runtime"), loader2 = async 
 function Index() {
   let [searchParams] = (0, import_react8.useSearchParams)(), searchValue = searchParams.get("searchValue"), headers = ["RFC", "Nombre", "Puesto", "Sueldo", "Prod", "Lugar", "Fecha Ingreso"], navigate = (0, import_react8.useNavigate)(), loaderData = (0, import_react8.useLoaderData)(), openEmpleado = (id) => {
     navigate(`/rh/empleados/${id}`);
-  }, rows = [{
-    id: "ejemploderfc",
-    data: ["ejemploderfc23", "Ejemplo de nombre", "Ejemplo de puesto", "$1000", "0.95", "Ejemplo de lugar", "Ejemplo de fecha"]
-  }];
+  };
   return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(import_jsx_dev_runtime9.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
       SearchBar,
@@ -830,20 +836,168 @@ function Index() {
       !1,
       {
         fileName: "app/routes/rh.empleados._index.tsx",
-        lineNumber: 63,
+        lineNumber: 56,
         columnNumber: 13
       },
       this
     ),
     /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(Tabla, { headers, rows: loaderData.data, onRowSelected: openEmpleado }, void 0, !1, {
       fileName: "app/routes/rh.empleados._index.tsx",
-      lineNumber: 66,
+      lineNumber: 59,
       columnNumber: 13
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/rh.empleados._index.tsx",
-    lineNumber: 62,
+    lineNumber: 55,
     columnNumber: 9
+  }, this);
+}
+
+// app/routes/rh.lugares._index.tsx
+var rh_lugares_index_exports = {};
+__export(rh_lugares_index_exports, {
+  default: () => Index2,
+  loader: () => loader3
+});
+var import_react10 = require("@remix-run/react");
+
+// app/components/InformacionGeneral.tsx
+var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime");
+function InformacionGeneral(props) {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { "aria-disabled": !0, className: "informacion general " + props.type + " " + props.variant, children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("label", { className: "label-small", children: props.label }, void 0, !1, {
+      fileName: "app/components/InformacionGeneral.tsx",
+      lineNumber: 4,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("p", { className: "title-small", children: props.content }, void 0, !1, {
+      fileName: "app/components/InformacionGeneral.tsx",
+      lineNumber: 5,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/components/InformacionGeneral.tsx",
+    lineNumber: 3,
+    columnNumber: 9
+  }, this);
+}
+
+// app/components/InformacionCantidad.tsx
+var import_jsx_dev_runtime11 = require("react/jsx-dev-runtime");
+function InformacionCantidad_default(props) {
+  let pClass = props.variant == "peque\xF1o" ? "title-small" : props.variant == "mediano" ? "title-large" : "display-large", labelClass = props.variant == "peque\xF1o" ? "label-small" : props.variant == "mediano" ? "label-medium" : "label-large";
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "informacion cantidad " + props.type + " " + props.variant + " " + props.className, id: props.id, children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("p", { className: pClass, children: props.cantidad }, void 0, !1, {
+      fileName: "app/components/InformacionCantidad.tsx",
+      lineNumber: 6,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("label", { className: labelClass, children: props.title }, void 0, !1, {
+      fileName: "app/components/InformacionCantidad.tsx",
+      lineNumber: 7,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/components/InformacionCantidad.tsx",
+    lineNumber: 5,
+    columnNumber: 9
+  }, this);
+}
+
+// app/components/InformacionLugarRH.tsx
+var import_react9 = require("@remix-run/react"), import_jsx_dev_runtime12 = require("react/jsx-dev-runtime");
+function InformacionLugarBuscarRH(props) {
+  let redirect6 = (0, import_react9.useNavigate)();
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(import_react9.Link, { className: "infoLugar", to: `./${props.id}`, prefetch: "intent", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("h3", { className: "headline-small on-surface-text", children: props.nombre }, void 0, !1, {
+      fileName: "app/components/InformacionLugarRH.tsx",
+      lineNumber: 22,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(InformacionGeneral, { label: "Direcci\xF3n", content: props.direccion, variant: "line", type: "filled" }, void 0, !1, {
+      fileName: "app/components/InformacionLugarRH.tsx",
+      lineNumber: 23,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "row wrap fit", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(InformacionCantidad_default, { title: "Empleados", cantidad: props.empleados, variant: "peque\xF1o", type: "filled" }, void 0, !1, {
+        fileName: "app/components/InformacionLugarRH.tsx",
+        lineNumber: 25,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(InformacionCantidad_default, { title: "Productividad", cantidad: props.productividad, variant: "peque\xF1o", type: "filled" }, void 0, !1, {
+        fileName: "app/components/InformacionLugarRH.tsx",
+        lineNumber: 26,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(InformacionGeneral, { label: "Tipo Tienda", content: props.tipo, variant: "default", type: "filled" }, void 0, !1, {
+        fileName: "app/components/InformacionLugarRH.tsx",
+        lineNumber: 27,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/components/InformacionLugarRH.tsx",
+      lineNumber: 24,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(InformacionGeneral, { label: "Encargado", content: props.encargado, variant: "line", type: "filled" }, void 0, !1, {
+      fileName: "app/components/InformacionLugarRH.tsx",
+      lineNumber: 29,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/components/InformacionLugarRH.tsx",
+    lineNumber: 21,
+    columnNumber: 9
+  }, this);
+}
+
+// app/utils/lugar.api.ts
+async function suggestLugar(token, query) {
+  let requestOptions = requestOptionsGetClient(token);
+  return await fetch(`${url}/lugar/suggest/${query}`, requestOptions).then((response) => response.text().then((text) => JSON.parse(text)));
+}
+async function searchLugarRh(request, query) {
+  let requestOptions = await requestOptionsGET(request), response = await (await fetch(`${url}/lugar/buscar/rh/${query}`, requestOptions)).text();
+  return response === "" ? [] : JSON.parse(response);
+}
+async function searchAllLugaresRh(request) {
+  let requestOptions = await requestOptionsGET(request), response = await (await fetch(`${url}/lugar/buscar/rh`, requestOptions)).text();
+  return response === "" ? [] : JSON.parse(response);
+}
+
+// app/routes/rh.lugares._index.tsx
+var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime"), loader3 = async ({ request }) => {
+  let searchParams = new URL(request.url).searchParams;
+  console.log(searchParams);
+  let searchValue = searchParams.get("searchValue"), data = [], lugares = [];
+  return searchValue ? lugares = await searchLugarRh(request, searchValue) : lugares = await searchAllLugaresRh(request), data = lugares.map((lugar) => lugar), {
+    searchValue,
+    title: "Empleados",
+    data
+  };
+};
+function Index2() {
+  let lugares = (0, import_react10.useLoaderData)().data;
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_jsx_dev_runtime13.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(SearchBar, { label: "Buscar lugar por nombre" }, void 0, !1, {
+      fileName: "app/routes/rh.lugares._index.tsx",
+      lineNumber: 38,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("section", { children: lugares.map((lugar) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(InformacionLugarBuscarRH, { id: lugar.id.toString(), nombre: lugar.nombre, direccion: lugar.direccion, empleados: lugar.empleados, productividad: lugar.productividad, tipo: lugar.tipo, encargado: lugar.nombreEncargado }, lugar.id, !1, {
+      fileName: "app/routes/rh.lugares._index.tsx",
+      lineNumber: 42,
+      columnNumber: 28
+    }, this)) }, void 0, !1, {
+      fileName: "app/routes/rh.lugares._index.tsx",
+      lineNumber: 39,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/routes/rh.lugares._index.tsx",
+    lineNumber: 37,
+    columnNumber: 12
   }, this);
 }
 
@@ -851,25 +1005,238 @@ function Index() {
 var rh_empleados_id_exports = {};
 __export(rh_empleados_id_exports, {
   default: () => Empleado,
-  loader: () => loader3
+  loader: () => loader4
 });
-var import_react9 = require("@remix-run/react");
-var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime"), loader3 = async ({ request, params }) => {
-  let empleado = await getEmpleado(request, params.id);
+var import_node6 = require("@remix-run/node"), import_react12 = require("@remix-run/react");
+
+// app/components/Linea.tsx
+var import_react_chartjs_2 = require("react-chartjs-2"), import_chart = require("chart.js");
+
+// app/utils/colores.ts
+var md_sys_color_primary_light = "#216C2E";
+var md_sys_color_secondary_light = "#526350";
+var md_sys_color_tertiary_light = "#39656B";
+var md_sys_color_error_light = "#BA1A1A";
+var md_sys_color_outline_light = "#72796F";
+var md_sys_color_primary_dark = "#8CD88D";
+var md_sys_color_secondary_dark = "#B9CCB4";
+var md_sys_color_tertiary_dark = "#A1CED5";
+var md_sys_color_error_dark = "#FFB4AB";
+var md_sys_color_outline_dark = "#8C9388";
+var primary = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? md_sys_color_primary_dark : md_sys_color_primary_light;
+var secondary = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? md_sys_color_secondary_dark : md_sys_color_secondary_light;
+var tertiary = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? md_sys_color_tertiary_dark : md_sys_color_tertiary_light;
+var error = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? md_sys_color_error_dark : md_sys_color_error_light;
+var outline = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? md_sys_color_outline_dark : md_sys_color_outline_light;
+
+// app/components/Linea.tsx
+var import_react11 = require("react"), import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
+import_chart.Chart.register(
+  import_chart.CategoryScale,
+  import_chart.LinearScale,
+  import_chart.PointElement,
+  import_chart.LineElement,
+  import_chart.Title,
+  import_chart.Tooltip,
+  import_chart.Legend,
+  import_chart.Filler
+);
+function GraficaLineas(props) {
+  let [lineaColores, setLineaColores] = (0, import_react11.useState)([]), [data, setData] = (0, import_react11.useState)({ labels: [], datasets: [] }), config = {
+    responsive: !0,
+    maintainAspectRatio: !1,
+    lineTension: 0.3,
+    interaction: {
+      mode: "index",
+      intersect: !1
+    },
+    plugins: {
+      legend: {
+        position: "bottom"
+      },
+      title: {
+        display: !0,
+        text: props.title
+      }
+    }
+  };
+  return (0, import_react11.useEffect)(() => {
+    setLineaColores([primary(), tertiary(), secondary(), outline(), error()]);
+  }, []), (0, import_react11.useEffect)(() => {
+    setData({
+      labels: props.labels,
+      datasets: props.dataSets.map((dataSet, i) => (i > lineaColores.length && (i = i % lineaColores.length), {
+        label: dataSet.label,
+        data: dataSet.data,
+        fill: props.fill,
+        backgroundColor: lineaColores[i],
+        borderColor: lineaColores[i],
+        tension: 0.2
+      }))
+    });
+  }, [props.dataSets, lineaColores]), /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "grafico background " + props.className, id: props.id, children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react_chartjs_2.Line, { data, options: config }, void 0, !1, {
+    fileName: "app/components/Linea.tsx",
+    lineNumber: 101,
+    columnNumber: 9
+  }, this) }, void 0, !1, {
+    fileName: "app/components/Linea.tsx",
+    lineNumber: 100,
+    columnNumber: 9
+  }, this);
+}
+
+// app/routes/rh.empleados.$id.tsx
+var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime"), loader4 = async ({ request, params }) => {
+  let empleado = params.id && await getEmpleado(request, params.id), requestProductividad = params.id && empleado && await getHistorialProductividad(request, params.id);
+  var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  let productividad = requestProductividad && requestProductividad.map((p) => p.productividad), labels = requestProductividad && requestProductividad.map((p) => meses[p.mes - 1]);
   return empleado ? {
     empleado,
+    productividad,
+    labels,
     title: empleado.nombre,
     redirect: "/rh/empleados"
-  } : {
-    empleado
-  };
+  } : (0, import_node6.redirect)("/rh/empleados");
 };
 function Empleado() {
-  let matches = (0, import_react9.useMatches)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("h1", {}, void 0, !1, {
+  let matches = (0, import_react12.useMatches)(), loaderData = (0, import_react12.useLoaderData)(), infoEmpleado = loaderData.empleado, dataSets = [
+    {
+      label: "Productividad",
+      data: loaderData.productividad
+    }
+  ];
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_jsx_dev_runtime15.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "row fit wrap no-grow", style: {
+      justifyContent: "space-between"
+    }, children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "RFC", content: infoEmpleado.rfc, variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 55,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "NSS", content: infoEmpleado.nss.toString(), variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 56,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Telefono", content: infoEmpleado.telefono.toString(), variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 57,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Puesto", content: infoEmpleado.puesto, variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 58,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Lugar", content: infoEmpleado.nombreLugar, variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 59,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Direccion", content: infoEmpleado.direccion, variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 60,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Correo", content: infoEmpleado.correo, variant: "line", type: "filled" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 61,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "row fit grow1", style: {
+        width: "fit-content",
+        justifyContent: "flex-end"
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(Button, { type: "button", variant: "filled", className: "primary", label: "Modificar contrato" }, void 0, !1, {
+          fileName: "app/routes/rh.empleados.$id.tsx",
+          lineNumber: 66,
+          columnNumber: 21
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(Button, { type: "button", variant: "outlined", className: "error", label: "Despedir" }, void 0, !1, {
+          fileName: "app/routes/rh.empleados.$id.tsx",
+          lineNumber: 67,
+          columnNumber: 21
+        }, this)
+      ] }, void 0, !0, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 62,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/routes/rh.empleados.$id.tsx",
+      lineNumber: 52,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "grid-4-3", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.salario, title: "Sueldo", id: "a" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 72,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Vacaciones restantes", id: "b" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 73,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Faltas(Disciplinarias)", id: "c" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 74,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(GraficaLineas, { dataSets, labels: loaderData.labels, id: "d", title: "Historial de productividad" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 75,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.diasInicio ? infoEmpleado.diasInicio : 1 / 0, title: "D\xEDas en la empresa", id: "e" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 76,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.diasFin ? infoEmpleado.diasFin : 1 / 0, title: "D\xEDas para fin de contrato", id: "f" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 77,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Avance de Objetivos", id: "g" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 78,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Inasistencias", id: "h" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 79,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.indiceProductividad, title: "Indice de productividad", id: "i" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 80,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/routes/rh.empleados.$id.tsx",
+      lineNumber: 70,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, !0, {
     fileName: "app/routes/rh.empleados.$id.tsx",
-    lineNumber: 25,
+    lineNumber: 51,
     columnNumber: 9
+  }, this);
+}
+
+// app/routes/rh.lugares.$id.tsx
+var rh_lugares_id_exports = {};
+__export(rh_lugares_id_exports, {
+  default: () => Lugar
+});
+var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime");
+function Lugar() {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("h1", { children: "Lugar" }, void 0, !1, {
+    fileName: "app/routes/rh.lugares.$id.tsx",
+    lineNumber: 2,
+    columnNumber: 12
   }, this);
 }
 
@@ -877,13 +1244,13 @@ function Empleado() {
 var rh_empleados_exports = {};
 __export(rh_empleados_exports, {
   default: () => Empleados,
-  loader: () => loader4
+  loader: () => loader5
 });
-var import_react10 = require("@remix-run/react"), import_jsx_dev_runtime11 = require("react/jsx-dev-runtime"), loader4 = async ({ request, params }) => ({
+var import_react13 = require("@remix-run/react"), import_jsx_dev_runtime17 = require("react/jsx-dev-runtime"), loader5 = async ({ request, params }) => ({
   title: "Empleados"
 });
 function Empleados() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(import_jsx_dev_runtime11.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(import_react10.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_jsx_dev_runtime17.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_react13.Outlet, {}, void 0, !1, {
     fileName: "app/routes/rh.empleados.tsx",
     lineNumber: 14,
     columnNumber: 9
@@ -899,9 +1266,9 @@ var asistencia_exports = {};
 __export(asistencia_exports, {
   default: () => Asistencia
 });
-var import_jsx_dev_runtime12 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime");
 function Asistencia() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("h1", { children: "Asistencia" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h1", { children: "Asistencia" }, void 0, !1, {
     fileName: "app/routes/asistencia.tsx",
     lineNumber: 4,
     columnNumber: 13
@@ -916,12 +1283,30 @@ function Asistencia() {
 var rh_lugares_exports = {};
 __export(rh_lugares_exports, {
   default: () => Lugares,
-  loader: () => loader5
+  links: () => links2,
+  loader: () => loader6
 });
-var loader5 = async ({ request, params }) => ({
+var import_react14 = require("@remix-run/react");
+
+// app/styles/rhLugares.css
+var rhLugares_default = "/build/_assets/rhLugares-RCUMDIWS.css";
+
+// app/routes/rh.lugares.tsx
+var import_jsx_dev_runtime19 = require("react/jsx-dev-runtime"), links2 = () => [
+  { rel: "stylesheet", href: rhLugares_default }
+], loader6 = async ({ request, params }) => ({
   title: "Lugares"
 });
 function Lugares() {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_jsx_dev_runtime19.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_react14.Outlet, {}, void 0, !1, {
+    fileName: "app/routes/rh.lugares.tsx",
+    lineNumber: 22,
+    columnNumber: 13
+  }, this) }, void 0, !1, {
+    fileName: "app/routes/rh.lugares.tsx",
+    lineNumber: 21,
+    columnNumber: 10
+  }, this);
 }
 
 // app/routes/rh._index.tsx
@@ -929,26 +1314,26 @@ var rh_index_exports = {};
 __export(rh_index_exports, {
   ErrorBoundary: () => ErrorBoundary,
   action: () => action,
-  default: () => Index2,
-  loader: () => loader6
+  default: () => Index3,
+  loader: () => loader7
 });
-var import_react15 = require("@remix-run/react"), import_react16 = require("react");
+var import_react19 = require("@remix-run/react"), import_react20 = require("react");
 
 // app/components/ExtendedFAB.tsx
-var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime20 = require("react/jsx-dev-runtime");
 function ExtendedFAB(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("button", { className: "extended fab " + props.variant, onClick: props.onClick, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(Icon, { icon: props.icon, type: "outlined" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("button", { className: "extended fab " + props.variant, onClick: props.onClick, children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(Icon, { icon: props.icon, type: "outlined" }, void 0, !1, {
       fileName: "app/components/ExtendedFAB.tsx",
       lineNumber: 6,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("label", { children: props.label }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("label", { children: props.label }, void 0, !1, {
       fileName: "app/components/ExtendedFAB.tsx",
       lineNumber: 7,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "state-layer on-primary" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { className: "state-layer on-primary" }, void 0, !1, {
       fileName: "app/components/ExtendedFAB.tsx",
       lineNumber: 8,
       columnNumber: 13
@@ -960,39 +1345,17 @@ function ExtendedFAB(props) {
   }, this);
 }
 
-// app/components/InformacionCantidad.tsx
-var import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
-function InformacionCantidad_default(props) {
-  let pClass = props.variant == "peque\xF1o" ? "title-small" : props.variant == "mediano" ? "title-large" : "display-large", labelClass = props.variant == "peque\xF1o" ? "label-small" : props.variant == "mediano" ? "label-medium" : "label-large";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "informacion cantidad " + props.type + " " + props.variant, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("p", { className: pClass, children: props.cantidad }, void 0, !1, {
-      fileName: "app/components/InformacionCantidad.tsx",
-      lineNumber: 6,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("label", { className: labelClass, children: props.title }, void 0, !1, {
-      fileName: "app/components/InformacionCantidad.tsx",
-      lineNumber: 7,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/components/InformacionCantidad.tsx",
-    lineNumber: 5,
-    columnNumber: 9
-  }, this);
-}
-
 // app/components/AgregarEmpleadoOverlay.tsx
-var import_react13 = require("@remix-run/react"), import_react14 = require("react");
+var import_react17 = require("@remix-run/react"), import_react18 = require("react");
 
 // app/components/Overlay.tsx
-var import_react11 = require("react");
+var import_react15 = require("react");
 var import_react_router_dom = require("react-router-dom");
 
 // app/components/ErrorDialog.tsx
-var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime21 = require("react/jsx-dev-runtime");
 function ErrorDialog(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "errorDialog", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("p", { className: "body-medium", children: props.message }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("div", { className: "errorDialog", children: /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("p", { className: "body-medium", children: props.message }, void 0, !1, {
     fileName: "app/components/ErrorDialog.tsx",
     lineNumber: 4,
     columnNumber: 13
@@ -1004,13 +1367,13 @@ function ErrorDialog(props) {
 }
 
 // app/components/Overlay.tsx
-var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime22 = require("react/jsx-dev-runtime");
 function Overlay(props) {
-  let [errorMessage, setErrorMesage] = (0, import_react11.useState)(""), fetcher = (0, import_react_router_dom.useFetcher)(), data = fetcher.data;
-  return (0, import_react11.useEffect)(() => {
+  let [errorMessage, setErrorMesage] = (0, import_react15.useState)(""), fetcher = (0, import_react_router_dom.useFetcher)(), data = fetcher.data;
+  return (0, import_react15.useEffect)(() => {
     data && (data.status != 200 ? setErrorMesage(data.formError) : fetcher.state == "idle" && (setErrorMesage(""), props.updateData && props.updateData(fetcher.data.data), props.onPrimary && props.onPrimary()));
-  }, [fetcher.state]), /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_jsx_dev_runtime16.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+  }, [fetcher.state]), /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(
       "div",
       {
         className: "overlayBackground",
@@ -1025,29 +1388,29 @@ function Overlay(props) {
       },
       this
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(fetcher.Form, { method: "post", action: props.action, className: "overlay", children: [
-      errorMessage != "" ? /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(ErrorDialog, { message: errorMessage }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(fetcher.Form, { method: "post", action: props.action, className: "overlay", children: [
+      errorMessage != "" ? /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(ErrorDialog, { message: errorMessage }, void 0, !1, {
         fileName: "app/components/Overlay.tsx",
         lineNumber: 62,
         columnNumber: 39
-      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_jsx_dev_runtime16.Fragment, {}, void 0, !1, {
+      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, {}, void 0, !1, {
         fileName: "app/components/Overlay.tsx",
         lineNumber: 62,
         columnNumber: 80
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("input", { name: "action", hidden: !0, value: props.name, readOnly: !0 }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("input", { name: "action", hidden: !0, value: props.name, readOnly: !0 }, void 0, !1, {
         fileName: "app/components/Overlay.tsx",
         lineNumber: 63,
         columnNumber: 17
       }, this),
       props.children,
-      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "row buttons", children: [
-        props.onPrimary && /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(Button, { type: "submit", variant: "filled", className: "primary", label: props.primaryText }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("div", { className: "row buttons", children: [
+        props.onPrimary && /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Button, { type: "submit", variant: "filled", className: "primary", label: props.primaryText }, void 0, !1, {
           fileName: "app/components/Overlay.tsx",
           lineNumber: 66,
           columnNumber: 41
         }, this),
-        props.onSecundary && /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(Button, { type: "button", variant: "outlined", className: "secondary", label: props.secondaryText, onClick: props.onSecundary }, void 0, !1, {
+        props.onSecundary && /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Button, { type: "button", variant: "outlined", className: "secondary", label: props.secondaryText, onClick: props.onSecundary }, void 0, !1, {
           fileName: "app/components/Overlay.tsx",
           lineNumber: 67,
           columnNumber: 43
@@ -1076,37 +1439,8 @@ async function suggestCiudad(token, query) {
 }
 
 // app/components/NuevoContratoOverlay.tsx
-var import_react12 = require("react");
-
-// app/components/InformacionGeneral.tsx
-var import_jsx_dev_runtime17 = require("react/jsx-dev-runtime");
-function InformacionGeneral(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("div", { "aria-disabled": !0, className: "informacion general " + props.type + " " + props.variant, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("label", { className: "label-small", children: props.label }, void 0, !1, {
-      fileName: "app/components/InformacionGeneral.tsx",
-      lineNumber: 4,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("p", { className: "title-small", children: props.content }, void 0, !1, {
-      fileName: "app/components/InformacionGeneral.tsx",
-      lineNumber: 5,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/components/InformacionGeneral.tsx",
-    lineNumber: 3,
-    columnNumber: 9
-  }, this);
-}
-
-// app/utils/lugar.api.ts
-async function suggestLugar(token, query) {
-  let requestOptions = requestOptionsGetClient(token);
-  return await fetch(`${url}/lugar/buscar/${query}`, requestOptions).then((response) => response.text().then((text) => JSON.parse(text)));
-}
-
-// app/components/NuevoContratoOverlay.tsx
-var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime"), registrarNuevoContrato = async (form, request) => {
+var import_react16 = require("react");
+var import_jsx_dev_runtime23 = require("react/jsx-dev-runtime"), registrarNuevoContrato = async (form, request) => {
   let empleado = form.get("empleado"), puesto = form.get("puesto"), lugar = form.get("lugar");
   lugar = parseInt(lugar);
   let salario = form.get("salario");
@@ -1137,9 +1471,9 @@ var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime"), registrarNuevoC
   };
 };
 function NuevoContratoOverlay(props) {
-  let [startDate, setStartDate] = (0, import_react12.useState)(/* @__PURE__ */ new Date()), updateStartDate = (e) => {
+  let [startDate, setStartDate] = (0, import_react16.useState)(/* @__PURE__ */ new Date()), updateStartDate = (e) => {
     setStartDate(new Date(e.currentTarget.value));
-  }, ref = (0, import_react12.useRef)(null), puestos = [
+  }, ref = (0, import_react16.useRef)(null), puestos = [
     {
       name: "Recursos Humanos",
       value: "Recursos_Humanos"
@@ -1167,24 +1501,24 @@ function NuevoContratoOverlay(props) {
       value: lugar.id.toString()
     }))) : [];
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(import_jsx_dev_runtime18.Fragment, { children: props.isDisplayed && /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(Overlay, { primaryText: "Crear", name: "nuevoContrato", action: "?index", onPrimary: () => props.setNewContrato(!1), children: /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { className: "column", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h2", { className: "display-medium on-surface-text", children: "Nuevo contrato" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_jsx_dev_runtime23.Fragment, { children: props.isDisplayed && /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(Overlay, { primaryText: "Crear", name: "nuevoContrato", action: "?index", onPrimary: () => props.setNewContrato(!1), children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("div", { className: "column", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("h2", { className: "display-medium on-surface-text", children: "Nuevo contrato" }, void 0, !1, {
       fileName: "app/components/NuevoContratoOverlay.tsx",
       lineNumber: 114,
       columnNumber: 21
     }, this),
-    props.id && props.nombre ? /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { className: "row", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InformacionGeneral, { label: "Id del Empleado", content: props.id.toString(), variant: "default", type: "filled" }, void 0, !1, {
+    props.id && props.nombre ? /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("div", { className: "row", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(InformacionGeneral, { label: "Id del Empleado", content: props.id.toString(), variant: "default", type: "filled" }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 117,
         columnNumber: 29
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InformacionGeneral, { label: "Nombre del empleado", content: props.nombre, variant: "default", type: "filled" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(InformacionGeneral, { label: "Nombre del empleado", content: props.nombre, variant: "default", type: "filled" }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 118,
         columnNumber: 29
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("input", { name: "empleado", value: props.id.toString(), type: "text", readOnly: !0, hidden: !0 }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("input", { name: "empleado", value: props.id.toString(), type: "text", readOnly: !0, hidden: !0 }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 119,
         columnNumber: 29
@@ -1193,23 +1527,23 @@ function NuevoContratoOverlay(props) {
       fileName: "app/components/NuevoContratoOverlay.tsx",
       lineNumber: 116,
       columnNumber: 25
-    }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InputMenu, { label: "Empleado", name: "empleado", variant: "outlined" }, void 0, !1, {
+    }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(InputMenu, { label: "Empleado", name: "empleado", variant: "outlined" }, void 0, !1, {
       fileName: "app/components/NuevoContratoOverlay.tsx",
       lineNumber: 121,
       columnNumber: 25
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { className: "row", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InputMenu, { label: "Puesto*", name: "puesto", variant: "filled", initialSuggestions: puestos, selectOnly: !0 }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("div", { className: "row", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(InputMenu, { label: "Puesto*", name: "puesto", variant: "filled", initialSuggestions: puestos, selectOnly: !0 }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 124,
         columnNumber: 25
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InputMenu, { label: "Lugar*", name: "lugar", variant: "filled", suggestFunction: suggestLugarOptions }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(InputMenu, { label: "Lugar*", name: "lugar", variant: "filled", suggestFunction: suggestLugarOptions }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 125,
         columnNumber: 25
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(TextField, { label: "Salario*", name: "salario", type: "number", variant: "outlined", min: 0, max: 1e8 }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(TextField, { label: "Salario*", name: "salario", type: "number", variant: "outlined", min: 0, max: 1e8 }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 126,
         columnNumber: 25
@@ -1219,13 +1553,13 @@ function NuevoContratoOverlay(props) {
       lineNumber: 123,
       columnNumber: 21
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { className: "row", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(TextField, { label: "Dias de vacaciones al a\xF1o*", name: "vacaciones", type: "number", variant: "outlined", max: 365, min: 6 }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("div", { className: "row", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(TextField, { label: "Dias de vacaciones al a\xF1o*", name: "vacaciones", type: "number", variant: "outlined", max: 365, min: 6 }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 129,
         columnNumber: 25
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(TextField, { label: "Horas diarias", name: "horas", type: "number", variant: "outlined", max: 24, min: 0 }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(TextField, { label: "Horas diarias", name: "horas", type: "number", variant: "outlined", max: 24, min: 0 }, void 0, !1, {
         fileName: "app/components/NuevoContratoOverlay.tsx",
         lineNumber: 130,
         columnNumber: 25
@@ -1235,8 +1569,8 @@ function NuevoContratoOverlay(props) {
       lineNumber: 128,
       columnNumber: 21
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { className: "row", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("div", { className: "row", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(
         TextField,
         {
           label: "Fecha de inicio*",
@@ -1255,7 +1589,7 @@ function NuevoContratoOverlay(props) {
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(
         TextField,
         {
           label: "Fecha de finalizacion",
@@ -1294,7 +1628,7 @@ function NuevoContratoOverlay(props) {
 }
 
 // app/components/AgregarEmpleadoOverlay.tsx
-var import_jsx_dev_runtime19 = require("react/jsx-dev-runtime"), agregarEmpleado = async (form, request) => {
+var import_jsx_dev_runtime24 = require("react/jsx-dev-runtime"), agregarEmpleado = async (form, request) => {
   let nombre = form.get("nombre"), rfc = form.get("rfc"), correo = form.get("correo"), contrase\u00F1a = form.get("contrase\xF1a"), ciudad = form.get("ciudad"), calle = form.get("calle"), telefono = form.get("telefono");
   telefono = parseInt(telefono);
   let nss = form.get("nss");
@@ -1336,12 +1670,12 @@ var import_jsx_dev_runtime19 = require("react/jsx-dev-runtime"), agregarEmpleado
   };
 };
 function AgregarEmpleadoOverlay(props) {
-  let [rfc, setRfc] = (0, import_react14.useState)(""), [newContrato, setNewContrato] = (0, import_react14.useState)(!1), fetcher = (0, import_react13.useFetcher)(), onRfcChange = (e) => {
+  let [rfc, setRfc] = (0, import_react18.useState)(""), [newContrato, setNewContrato] = (0, import_react18.useState)(!1), fetcher = (0, import_react17.useFetcher)(), onRfcChange = (e) => {
     let rfcU = e.target.value;
     rfcU = rfcU.toUpperCase(), setRfc(rfcU);
   }, onEmpleadoAgregado = () => {
     props.setDisplayed(!1), setNewContrato(!0);
-  }, [id, setId] = (0, import_react14.useState)(), [nombre, setNombre] = (0, import_react14.useState)(""), updateData = (data) => {
+  }, [id, setId] = (0, import_react18.useState)(), [nombre, setNombre] = (0, import_react18.useState)(""), updateData = (data) => {
     console.log(data), setId(data.id), setNombre(data.nombre);
   }, suggestCiudades = async (val) => {
     let sCiudad = [];
@@ -1350,8 +1684,8 @@ function AgregarEmpleadoOverlay(props) {
       value: c.id
     }))) : [];
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_jsx_dev_runtime19.Fragment, { children: [
-    props.isDisplayed && /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(import_jsx_dev_runtime24.Fragment, { children: [
+    props.isDisplayed && /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
       Overlay,
       {
         isCancelable: () => props.setDisplayed(!1),
@@ -1363,12 +1697,12 @@ function AgregarEmpleadoOverlay(props) {
         action: "?index",
         updateData,
         children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("h2", { className: "display-medium on-surface-text", children: "Agregar empleado" }, void 0, !1, {
+          /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("h2", { className: "display-medium on-surface-text", children: "Agregar empleado" }, void 0, !1, {
             fileName: "app/components/AgregarEmpleadoOverlay.tsx",
             lineNumber: 154,
             columnNumber: 17
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
             TextField,
             {
               label: "Nombre completo",
@@ -1385,8 +1719,8 @@ function AgregarEmpleadoOverlay(props) {
             },
             this
           ),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("div", { className: "row", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "Telefono",
@@ -1405,7 +1739,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 value: rfc,
@@ -1427,7 +1761,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "NSS",
@@ -1451,8 +1785,8 @@ function AgregarEmpleadoOverlay(props) {
             lineNumber: 161,
             columnNumber: 17
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("div", { className: "row", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "Correo electronico",
@@ -1470,7 +1804,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "Contrase\xF1a",
@@ -1488,7 +1822,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "Fecha de nacimiento",
@@ -1510,8 +1844,8 @@ function AgregarEmpleadoOverlay(props) {
             lineNumber: 190,
             columnNumber: 17
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("div", { className: "row", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               InputMenu,
               {
                 label: "Ciudad",
@@ -1528,7 +1862,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "Calle",
@@ -1550,8 +1884,8 @@ function AgregarEmpleadoOverlay(props) {
             lineNumber: 211,
             columnNumber: 17
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("div", { className: "row", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "No. Externo",
@@ -1569,7 +1903,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "No. Interno",
@@ -1587,7 +1921,7 @@ function AgregarEmpleadoOverlay(props) {
               },
               this
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
               TextField,
               {
                 label: "C\xF3digo Postal",
@@ -1622,7 +1956,7 @@ function AgregarEmpleadoOverlay(props) {
       },
       this
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(NuevoContratoOverlay, { token: props.token, setNewContrato, id, nombre, isDisplayed: newContrato }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(NuevoContratoOverlay, { token: props.token, setNewContrato, id, nombre, isDisplayed: newContrato }, void 0, !1, {
       fileName: "app/components/AgregarEmpleadoOverlay.tsx",
       lineNumber: 252,
       columnNumber: 13
@@ -1635,7 +1969,7 @@ function AgregarEmpleadoOverlay(props) {
 }
 
 // app/routes/rh._index.tsx
-var import_jsx_dev_runtime20 = require("react/jsx-dev-runtime"), loader6 = async ({ request, params }) => {
+var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime"), loader7 = async ({ request, params }) => {
   let empleados = await getEmpleadosMasProductivos(request), productivos = [];
   empleados && (productivos = empleados.map((empleado) => ({
     id: empleado.id,
@@ -1667,38 +2001,38 @@ var import_jsx_dev_runtime20 = require("react/jsx-dev-runtime"), loader6 = async
     formError: "Error"
   };
 };
-function Index2() {
-  let navigate = (0, import_react15.useNavigate)(), matches = (0, import_react15.useMatches)(), actionData = (0, import_react15.useActionData)(), loaderData = (0, import_react15.useLoaderData)(), [newEmpleado, setNewEmpleado] = (0, import_react16.useState)(!1), openEmpleado = (id) => {
+function Index3() {
+  let navigate = (0, import_react19.useNavigate)(), matches = (0, import_react19.useMatches)(), actionData = (0, import_react19.useActionData)(), loaderData = (0, import_react19.useLoaderData)(), [newEmpleado, setNewEmpleado] = (0, import_react20.useState)(!1), openEmpleado = (id) => {
     navigate(`/rh/empleados/${id}?redirectTo=%2f`);
   }, headers = ["Nombre", "Prod"];
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(import_jsx_dev_runtime20.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { className: "actionsBar", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(ExtendedFAB, { icon: "add", label: "Crear objetivo", variant: "primary", onClick: () => {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_jsx_dev_runtime25.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("div", { className: "actionsBar", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(ExtendedFAB, { icon: "add", label: "Crear objetivo", variant: "primary", onClick: () => {
       } }, void 0, !1, {
         fileName: "app/routes/rh._index.tsx",
         lineNumber: 94,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(ExtendedFAB, { icon: "add", label: "Registrar falta", variant: "primary", onClick: () => {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(ExtendedFAB, { icon: "add", label: "Registrar falta", variant: "primary", onClick: () => {
       } }, void 0, !1, {
         fileName: "app/routes/rh._index.tsx",
         lineNumber: 95,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(ExtendedFAB, { icon: "add", label: "Nuevo empleado", variant: "tertiary", onClick: () => {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(ExtendedFAB, { icon: "add", label: "Nuevo empleado", variant: "tertiary", onClick: () => {
         setNewEmpleado(!0);
       } }, void 0, !1, {
         fileName: "app/routes/rh._index.tsx",
         lineNumber: 96,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(ExtendedFAB, { icon: "sync_alt", label: "Transferir empleado", variant: "primary", onClick: () => {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(ExtendedFAB, { icon: "sync_alt", label: "Transferir empleado", variant: "primary", onClick: () => {
       } }, void 0, !1, {
         fileName: "app/routes/rh._index.tsx",
         lineNumber: 97,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(ExtendedFAB, { icon: "edit", label: "Modificar contrato", variant: "primary", onClick: () => {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(ExtendedFAB, { icon: "edit", label: "Modificar contrato", variant: "primary", onClick: () => {
       } }, void 0, !1, {
         fileName: "app/routes/rh._index.tsx",
         lineNumber: 98,
@@ -1709,14 +2043,14 @@ function Index2() {
       lineNumber: 93,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { className: "row", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("section", { className: "card", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("h3", { className: "header-large on-surface-variant-text", children: "Empleados m\xE1s productivos" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("div", { className: "row", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("section", { className: "card", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h3", { className: "header-large on-surface-variant-text", children: "Empleados m\xE1s productivos" }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 102,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(Tabla, { headers, rows: loaderData.productivos, onRowSelected: openEmpleado }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(Tabla, { headers, rows: loaderData.productivos, onRowSelected: openEmpleado }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 103,
           columnNumber: 21
@@ -1726,13 +2060,13 @@ function Index2() {
         lineNumber: 101,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("section", { className: "card", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("h3", { className: "header-large on-surface-variant-text", children: "Empleados menos productivos" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("section", { className: "card", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h3", { className: "header-large on-surface-variant-text", children: "Empleados menos productivos" }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 106,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(Tabla, { headers, rows: loaderData.inproductivos, onRowSelected: openEmpleado }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(Tabla, { headers, rows: loaderData.inproductivos, onRowSelected: openEmpleado }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 107,
           columnNumber: 21
@@ -1742,18 +2076,18 @@ function Index2() {
         lineNumber: 105,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("section", { className: "column fit", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: loaderData.empleadosVacaciones, title: "Empleados de vacaciones" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("section", { className: "column fit", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: loaderData.empleadosVacaciones, title: "Empleados de vacaciones" }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 110,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 56, title: "Contratos proximos a concluir" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 56, title: "Contratos proximos a concluir" }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 111,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 56, title: "Promedio de productividad" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 56, title: "Promedio de productividad" }, void 0, !1, {
           fileName: "app/routes/rh._index.tsx",
           lineNumber: 112,
           columnNumber: 21
@@ -1768,7 +2102,7 @@ function Index2() {
       lineNumber: 100,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(AgregarEmpleadoOverlay, { isDisplayed: newEmpleado, setDisplayed: setNewEmpleado, token: loaderData.token }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(AgregarEmpleadoOverlay, { isDisplayed: newEmpleado, setDisplayed: setNewEmpleado, token: loaderData.token }, void 0, !1, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 115,
       columnNumber: 13
@@ -1780,18 +2114,18 @@ function Index2() {
   }, this);
 }
 function ErrorBoundary() {
-  let error = (0, import_react15.useRouteError)();
-  return (0, import_react15.isRouteErrorResponse)(error) ? /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { className: "error-container", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("h1", { children: [
-      error.status,
+  let error2 = (0, import_react19.useRouteError)();
+  return (0, import_react19.isRouteErrorResponse)(error2) ? /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("div", { className: "error-container", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h1", { children: [
+      error2.status,
       " ",
-      error.statusText
+      error2.statusText
     ] }, void 0, !0, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 126,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("p", { children: error.data }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("p", { children: error2.data }, void 0, !1, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 129,
       columnNumber: 13
@@ -1800,23 +2134,23 @@ function ErrorBoundary() {
     fileName: "app/routes/rh._index.tsx",
     lineNumber: 125,
     columnNumber: 11
-  }, this) : error instanceof Error ? /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { className: "error-container", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("h1", { children: "Error" }, void 0, !1, {
+  }, this) : error2 instanceof Error ? /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("div", { className: "error-container", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h1", { children: "Error" }, void 0, !1, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 135,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("p", { children: error.message }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("p", { children: error2.message }, void 0, !1, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 136,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("p", { children: "The stack trace is:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("p", { children: "The stack trace is:" }, void 0, !1, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 137,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("pre", { children: error.stack }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("pre", { children: error2.stack }, void 0, !1, {
       fileName: "app/routes/rh._index.tsx",
       lineNumber: 138,
       columnNumber: 13
@@ -1825,7 +2159,7 @@ function ErrorBoundary() {
     fileName: "app/routes/rh._index.tsx",
     lineNumber: 134,
     columnNumber: 11
-  }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("h1", { className: "error-container", children: "Unknown Error" }, void 0, !1, {
+  }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h1", { className: "error-container", children: "Unknown Error" }, void 0, !1, {
     fileName: "app/routes/rh._index.tsx",
     lineNumber: 142,
     columnNumber: 16
@@ -1836,19 +2170,19 @@ function ErrorBoundary() {
 var logout_exports = {};
 __export(logout_exports, {
   action: () => action2,
-  loader: () => loader7
+  loader: () => loader8
 });
-var import_node6 = require("@remix-run/node");
-var action2 = async ({ request }) => logout(request), loader7 = async () => (0, import_node6.redirect)("/");
+var import_node7 = require("@remix-run/node");
+var action2 = async ({ request }) => logout(request), loader8 = async () => (0, import_node7.redirect)("/");
 
 // app/routes/ventas.tsx
 var ventas_exports = {};
 __export(ventas_exports, {
   default: () => Ventas
 });
-var import_jsx_dev_runtime21 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime26 = require("react/jsx-dev-runtime");
 function Ventas() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("h1", { children: "Ventas" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("h1", { children: "Ventas" }, void 0, !1, {
     fileName: "app/routes/ventas.tsx",
     lineNumber: 5,
     columnNumber: 13
@@ -1864,19 +2198,19 @@ var login_exports = {};
 __export(login_exports, {
   action: () => action3,
   default: () => Login,
-  links: () => links2,
-  loader: () => loader8
+  links: () => links3,
+  loader: () => loader9
 });
-var import_node7 = require("@remix-run/node"), import_react17 = require("react");
+var import_node8 = require("@remix-run/node"), import_react21 = require("react");
 
 // app/styles/login.css
 var login_default = "/build/_assets/login-P2MW232P.css";
 
 // app/routes/login.tsx
-var import_react18 = require("@remix-run/react");
-var import_jsx_dev_runtime22 = require("react/jsx-dev-runtime"), links2 = () => [{ rel: "stylesheet", href: login_default }], loader8 = async ({ request }) => {
+var import_react22 = require("@remix-run/react");
+var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime"), links3 = () => [{ rel: "stylesheet", href: login_default }], loader9 = async ({ request }) => {
   let [token, user, puesto] = await getUserSession(request);
-  return token ? (0, import_node7.redirect)("/") : null;
+  return token ? (0, import_node8.redirect)("/") : null;
 }, action3 = async ({ request }) => {
   let form = await request.formData(), user = form.get("user"), password = form.get("password"), redirectTo = form.get("redirectTo");
   if (user != "" && password != "") {
@@ -1886,7 +2220,7 @@ var import_jsx_dev_runtime22 = require("react/jsx-dev-runtime"), links2 = () => 
   return { formError: "Favor de llenar los campos" };
 };
 function Login() {
-  let [isRfcValid, setIsRfcValid] = (0, import_react17.useState)(!0), [isPasswordValid, setIsPasswordValid] = (0, import_react17.useState)(!0), [rfc, setRfc] = (0, import_react17.useState)(""), actionData = (0, import_react18.useActionData)(), [messageError, setMessageError] = (0, import_react17.useState)((actionData == null ? void 0 : actionData.formError) || ""), [searchParams] = (0, import_react18.useSearchParams)();
+  let [isRfcValid, setIsRfcValid] = (0, import_react21.useState)(!0), [isPasswordValid, setIsPasswordValid] = (0, import_react21.useState)(!0), [rfc, setRfc] = (0, import_react21.useState)(""), actionData = (0, import_react22.useActionData)(), [messageError, setMessageError] = (0, import_react21.useState)((actionData == null ? void 0 : actionData.formError) || ""), [searchParams] = (0, import_react22.useSearchParams)();
   function validateRfc(event) {
     let rfc2 = event.target.value;
     setRfc(event.target.value.toUpperCase()), setMessageError(""), rfc2.length === 0 ? (setIsRfcValid(!1), setMessageError("El RFC no puede estar vac\xEDo")) : rfc2.length < 12 ? (setIsRfcValid(!1), setMessageError("El RFC debe tener al menos 12 caracteres")) : (setIsRfcValid(!0), setMessageError(""));
@@ -1897,34 +2231,34 @@ function Login() {
   }
   let upperCase = (event) => {
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("h2", { className: "display-large", children: "Inicio de sesi\xF3n" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(import_jsx_dev_runtime27.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("h2", { className: "display-large", children: "Inicio de sesi\xF3n" }, void 0, !1, {
       fileName: "app/routes/login.tsx",
       lineNumber: 85,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("form", { method: "post", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: searchParams.get("redirectTo") || "/", readOnly: !0 }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("form", { method: "post", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: searchParams.get("redirectTo") || "/", readOnly: !0 }, void 0, !1, {
         fileName: "app/routes/login.tsx",
         lineNumber: 88,
         columnNumber: 17
       }, this),
-      messageError && /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(ErrorDialog, { message: messageError }, void 0, !1, {
+      messageError && /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(ErrorDialog, { message: messageError }, void 0, !1, {
         fileName: "app/routes/login.tsx",
         lineNumber: 89,
         columnNumber: 34
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(TextField, { label: "RFC", name: "user", type: "text", variant: "outlined", onChange: validateRfc, isValid: isRfcValid, autoComplete: "off", value: rfc }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(TextField, { label: "RFC", name: "user", type: "text", variant: "outlined", onChange: validateRfc, isValid: isRfcValid, autoComplete: "off", value: rfc }, void 0, !1, {
         fileName: "app/routes/login.tsx",
         lineNumber: 90,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(TextField, { label: "Contrase\xF1a", name: "password", type: "password", variant: "outlined", onChange: validatePassword, isValid: isPasswordValid, autoComplete: "current-password" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(TextField, { label: "Contrase\xF1a", name: "password", type: "password", variant: "outlined", onChange: validatePassword, isValid: isPasswordValid, autoComplete: "current-password" }, void 0, !1, {
         fileName: "app/routes/login.tsx",
         lineNumber: 91,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Button, { type: "submit", variant: "filled", label: "Iniciar sesi\xF3n", className: "primary", color: "primary", disabled: !(isPasswordValid && isRfcValid) }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(Button, { type: "submit", variant: "filled", label: "Iniciar sesi\xF3n", className: "primary", color: "primary", disabled: !(isPasswordValid && isRfcValid) }, void 0, !1, {
         fileName: "app/routes/login.tsx",
         lineNumber: 92,
         columnNumber: 17
@@ -1945,21 +2279,21 @@ function Login() {
 var rh_exports = {};
 __export(rh_exports, {
   default: () => rh,
-  links: () => links3,
-  loader: () => loader9
+  links: () => links4,
+  loader: () => loader10
 });
-var import_react22 = require("@remix-run/react");
+var import_react26 = require("@remix-run/react");
 
 // app/components/Hero.tsx
-var import_react20 = require("react");
+var import_react24 = require("react");
 
 // app/components/Title.tsx
-var import_react19 = require("@remix-run/react");
-var import_jsx_dev_runtime23 = require("react/jsx-dev-runtime");
-function Title() {
-  let [searchParams] = (0, import_react19.useSearchParams)(), redirectTo = searchParams.get("redirectTo"), match = (0, import_react19.useMatches)().filter((match2) => match2.data && match2.data.title).pop();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_jsx_dev_runtime23.Fragment, { children: match != null && match.data.title && match.data.redirect ? /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_react19.Link, { to: redirectTo || match.data.redirect, className: "display-small on-surface-text title", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(Icon, { icon: "arrow_back_ios", type: "outlined" }, void 0, !1, {
+var import_react23 = require("@remix-run/react");
+var import_jsx_dev_runtime28 = require("react/jsx-dev-runtime");
+function Title2() {
+  let [searchParams] = (0, import_react23.useSearchParams)(), redirectTo = searchParams.get("redirectTo"), match = (0, import_react23.useMatches)().filter((match2) => match2.data && match2.data.title).pop();
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_jsx_dev_runtime28.Fragment, { children: match != null && match.data.title && match.data.redirect ? /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_react23.Link, { to: redirectTo || match.data.redirect, className: "display-small on-surface-text title", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(Icon, { icon: "arrow_back_ios", type: "outlined" }, void 0, !1, {
       fileName: "app/components/Title.tsx",
       lineNumber: 29,
       columnNumber: 21
@@ -1969,7 +2303,7 @@ function Title() {
     fileName: "app/components/Title.tsx",
     lineNumber: 28,
     columnNumber: 17
-  }, this) : (match == null ? void 0 : match.data.title) && /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("h2", { className: "display-small on-surface-text title", children: match == null ? void 0 : match.data.title }, void 0, !1, {
+  }, this) : (match == null ? void 0 : match.data.title) && /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("h2", { className: "display-small on-surface-text title", children: match == null ? void 0 : match.data.title }, void 0, !1, {
     fileName: "app/components/Title.tsx",
     lineNumber: 32,
     columnNumber: 41
@@ -1981,28 +2315,28 @@ function Title() {
 }
 
 // app/components/Hero.tsx
-var import_jsx_dev_runtime24 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime29 = require("react/jsx-dev-runtime");
 function Hero() {
-  let [time, setTime] = (0, import_react20.useState)(""), updateTime = () => {
+  let [time, setTime] = (0, import_react24.useState)(""), updateTime = () => {
     setTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
   };
-  return (0, import_react20.useEffect)(() => {
+  return (0, import_react24.useEffect)(() => {
     updateTime();
     let interval = setInterval(updateTime, 1e3);
     return () => clearInterval(interval);
-  }, []), /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("header", { className: "hero", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(Title, {}, void 0, !1, {
+  }, []), /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("header", { className: "hero", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(Title2, {}, void 0, !1, {
       fileName: "app/components/Hero.tsx",
       lineNumber: 21,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("div", { className: "dataContainer", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(InformacionGeneral, { label: "Fecha", content: (/* @__PURE__ */ new Date()).toLocaleDateString(), type: "filled", variant: "default" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("div", { className: "dataContainer", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(InformacionGeneral, { label: "Fecha", content: (/* @__PURE__ */ new Date()).toLocaleDateString(), type: "filled", variant: "default" }, void 0, !1, {
         fileName: "app/components/Hero.tsx",
         lineNumber: 23,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(InformacionGeneral, { label: "Hora", content: time, type: "filled", variant: "default" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(InformacionGeneral, { label: "Hora", content: time, type: "filled", variant: "default" }, void 0, !1, {
         fileName: "app/components/Hero.tsx",
         lineNumber: 24,
         columnNumber: 17
@@ -2020,16 +2354,16 @@ function Hero() {
 }
 
 // app/components/NavItem.tsx
-var import_react21 = require("@remix-run/react");
-var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime");
+var import_react25 = require("@remix-run/react");
+var import_jsx_dev_runtime30 = require("react/jsx-dev-runtime");
 function NavItem(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_jsx_dev_runtime25.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_react21.NavLink, { prefetch: "render", to: props.link, className: ({ isActive, isPending }) => "navItem " + (isPending || isActive ? "selected" : ""), end: props.end, children: ({ isActive, isPending }) => /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_jsx_dev_runtime25.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(Icon, { icon: props.icon, type: isActive ? "filled" : "outlined" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_react25.NavLink, { prefetch: "render", to: props.link, className: ({ isActive, isPending }) => "navItem " + (isPending || isActive ? "selected" : ""), end: props.end, children: ({ isActive, isPending }) => /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(Icon, { icon: props.icon, type: isActive ? "filled" : "outlined" }, void 0, !1, {
       fileName: "app/components/NavItem.tsx",
       lineNumber: 13,
       columnNumber: 21
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("p", { className: "label-large", children: props.name }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("p", { className: "label-large", children: props.name }, void 0, !1, {
       fileName: "app/components/NavItem.tsx",
       lineNumber: 15,
       columnNumber: 21
@@ -2050,16 +2384,16 @@ function NavItem(props) {
 }
 
 // app/components/NavigationDrawer.tsx
-var import_jsx_dev_runtime26 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime31 = require("react/jsx-dev-runtime");
 function NavigationDrawer(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("nav", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("div", { "aria-disabled": !0, className: "top", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("h1", { className: "title-medium", children: "Recursos Humanos" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("nav", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("div", { "aria-disabled": !0, className: "top", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("h1", { className: "title-medium", children: "Recursos Humanos" }, void 0, !1, {
         fileName: "app/components/NavigationDrawer.tsx",
         lineNumber: 11,
         columnNumber: 17
       }, this),
-      props.links.map((item) => /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)(
+      props.links.map((item) => /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(
         NavItem,
         {
           name: item.title,
@@ -2081,7 +2415,7 @@ function NavigationDrawer(props) {
       lineNumber: 10,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("div", { "aria-disabled": !0, className: "bottom", children: /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("form", { action: "/logout", method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)(Button, { className: "logout", icon: "logout", color: "error", label: "Cerrar Sesi\xF3n", type: "submit", variant: "outlined" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("div", { "aria-disabled": !0, className: "bottom", children: /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("form", { action: "/logout", method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(Button, { className: "logout", icon: "logout", color: "error", label: "Cerrar Sesi\xF3n", type: "submit", variant: "outlined" }, void 0, !1, {
       fileName: "app/components/NavigationDrawer.tsx",
       lineNumber: 25,
       columnNumber: 17
@@ -2102,15 +2436,15 @@ function NavigationDrawer(props) {
 }
 
 // app/styles/rh.css
-var rh_default = "/build/_assets/rh-J2R3MRW3.css";
+var rh_default = "/build/_assets/rh-3MFNDQMZ.css";
 
 // app/routes/rh.tsx
-var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime"), loader9 = async ({ request, params }) => ({
+var import_jsx_dev_runtime32 = require("react/jsx-dev-runtime"), loader10 = async ({ request, params }) => ({
   title: "Recursos Humanos"
-}), links3 = () => [{ rel: "stylesheet", href: rh_default }];
+}), links4 = () => [{ rel: "stylesheet", href: rh_default }];
 function rh() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(import_jsx_dev_runtime27.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(NavigationDrawer, { links: [{
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_jsx_dev_runtime32.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(NavigationDrawer, { links: [{
       title: "Inicio",
       link: "/rh",
       icon: "home",
@@ -2128,13 +2462,13 @@ function rh() {
       lineNumber: 50,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("main", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(Hero, {}, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("main", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(Hero, {}, void 0, !1, {
         fileName: "app/routes/rh.tsx",
         lineNumber: 52,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(import_react22.Outlet, {}, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_react26.Outlet, {}, void 0, !1, {
         fileName: "app/routes/rh.tsx",
         lineNumber: 53,
         columnNumber: 17
@@ -2152,7 +2486,7 @@ function rh() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-HJ3RGELC.js", imports: ["/build/_shared/chunk-GI2S6SSH.js", "/build/_shared/chunk-RQ7GWW3B.js", "/build/_shared/chunk-DG4HR4CT.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-5UPMXHPF.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/asistencia": { id: "routes/asistencia", parentId: "root", path: "asistencia", index: void 0, caseSensitive: void 0, module: "/build/routes/asistencia-WRK2EVCN.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-6H3EHQBX.js", imports: ["/build/_shared/chunk-VWUXSX6C.js", "/build/_shared/chunk-IBCIHWBQ.js", "/build/_shared/chunk-AVKYRRXB.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-IVCPR3TQ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh": { id: "routes/rh", parentId: "root", path: "rh", index: void 0, caseSensitive: void 0, module: "/build/routes/rh-6IDBXKDU.js", imports: ["/build/_shared/chunk-COGPOLQ6.js", "/build/_shared/chunk-AVKYRRXB.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh._index": { id: "routes/rh._index", parentId: "routes/rh", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh._index-4E3MJ3HM.js", imports: ["/build/_shared/chunk-VWUXSX6C.js", "/build/_shared/chunk-RKBFNAIX.js", "/build/_shared/chunk-IBCIHWBQ.js", "/build/_shared/chunk-6ZK7KAIB.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/rh.empleados": { id: "routes/rh.empleados", parentId: "routes/rh", path: "empleados", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados-NUQJCQV4.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados.$id": { id: "routes/rh.empleados.$id", parentId: "routes/rh.empleados", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados.$id-6ABFJUQY.js", imports: ["/build/_shared/chunk-6ZK7KAIB.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados._index": { id: "routes/rh.empleados._index", parentId: "routes/rh.empleados", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.empleados._index-KNZHDDD7.js", imports: ["/build/_shared/chunk-RKBFNAIX.js", "/build/_shared/chunk-IBCIHWBQ.js", "/build/_shared/chunk-AVKYRRXB.js", "/build/_shared/chunk-6ZK7KAIB.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares": { id: "routes/rh.lugares", parentId: "routes/rh", path: "lugares", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares-TNKLSROV.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/ventas": { id: "routes/ventas", parentId: "root", path: "ventas", index: void 0, caseSensitive: void 0, module: "/build/routes/ventas-UUCL3OZ4.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, version: "debf9f84", hmr: void 0, url: "/build/manifest-DEBF9F84.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-RKRO4FBD.js", imports: ["/build/_shared/chunk-N6LPIHUN.js", "/build/_shared/chunk-LVPVSEIS.js", "/build/_shared/chunk-7HUBQURA.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-YIUHMD2Z.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/asistencia": { id: "routes/asistencia", parentId: "root", path: "asistencia", index: void 0, caseSensitive: void 0, module: "/build/routes/asistencia-UTY6FPXU.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-LBOAMQC7.js", imports: ["/build/_shared/chunk-ZMLSXUPG.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-SAG47ILP.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh": { id: "routes/rh", parentId: "root", path: "rh", index: void 0, caseSensitive: void 0, module: "/build/routes/rh-BYAYO2MY.js", imports: ["/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh._index": { id: "routes/rh._index", parentId: "routes/rh", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh._index-ORX5D6BY.js", imports: ["/build/_shared/chunk-ZMLSXUPG.js", "/build/_shared/chunk-RXFURBB3.js", "/build/_shared/chunk-AQ4QIAVY.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-BHAJL77W.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/rh.empleados": { id: "routes/rh.empleados", parentId: "routes/rh", path: "empleados", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados-64NZ2TYO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados.$id": { id: "routes/rh.empleados.$id", parentId: "routes/rh.empleados", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados.$id-3HLHTPVR.js", imports: ["/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-BHAJL77W.js", "/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados._index": { id: "routes/rh.empleados._index", parentId: "routes/rh.empleados", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.empleados._index-V35SOA73.js", imports: ["/build/_shared/chunk-RXFURBB3.js", "/build/_shared/chunk-2UW2VS4J.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares": { id: "routes/rh.lugares", parentId: "routes/rh", path: "lugares", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares-BY65NTGR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares.$id": { id: "routes/rh.lugares.$id", parentId: "routes/rh.lugares", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares.$id-Z6FUORBG.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares._index": { id: "routes/rh.lugares._index", parentId: "routes/rh.lugares", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.lugares._index-Y6XS3GHM.js", imports: ["/build/_shared/chunk-AQ4QIAVY.js", "/build/_shared/chunk-2UW2VS4J.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-BHAJL77W.js", "/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/ventas": { id: "routes/ventas", parentId: "root", path: "ventas", index: void 0, caseSensitive: void 0, module: "/build/routes/ventas-LNDDPCDE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, version: "aefa135f", hmr: void 0, url: "/build/manifest-AEFA135F.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public\\build", future = { unstable_dev: !1, unstable_postcss: !1, unstable_tailwind: !1, v2_errorBoundary: !0, v2_meta: !0, v2_normalizeFormMethod: !0, v2_routeConvention: !0 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -2172,6 +2506,14 @@ var assetsBuildDirectory = "public\\build", future = { unstable_dev: !1, unstabl
     caseSensitive: void 0,
     module: rh_empleados_index_exports
   },
+  "routes/rh.lugares._index": {
+    id: "routes/rh.lugares._index",
+    parentId: "routes/rh.lugares",
+    path: void 0,
+    index: !0,
+    caseSensitive: void 0,
+    module: rh_lugares_index_exports
+  },
   "routes/rh.empleados.$id": {
     id: "routes/rh.empleados.$id",
     parentId: "routes/rh.empleados",
@@ -2179,6 +2521,14 @@ var assetsBuildDirectory = "public\\build", future = { unstable_dev: !1, unstabl
     index: void 0,
     caseSensitive: void 0,
     module: rh_empleados_id_exports
+  },
+  "routes/rh.lugares.$id": {
+    id: "routes/rh.lugares.$id",
+    parentId: "routes/rh.lugares",
+    path: ":id",
+    index: void 0,
+    caseSensitive: void 0,
+    module: rh_lugares_id_exports
   },
   "routes/rh.empleados": {
     id: "routes/rh.empleados",

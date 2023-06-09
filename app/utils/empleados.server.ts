@@ -3,7 +3,8 @@ import { getUserSession } from "./sessions.server";
 import {postRequestOptions, requestOptionsGET, url} from "./api.config";
 import { badRequest } from "./request.server";
 import { useSearchParams } from "@remix-run/react";
-import { Empleado, EmpleadoEncontrado, EmpleadoProductivo } from "../types/Empleado";
+import { Empleado, EmpleadoEncontrado, EmpleadoInfo, EmpleadoProductivo } from "../types/Empleado";
+import { Contrato } from "~/types/Contrato";
 export async function getUserData(request:Request){
  
    const requestOptions = await requestOptionsGET(request);
@@ -31,11 +32,8 @@ export async function getEmpleado(request:Request, id:string) {
     try{
         let request = await fetch(`${url}/empleados/${id}`, requestOptions);
         let response = await request.text();
-        let data = JSON.parse(response) as Empleado;
+        let data = JSON.parse(response) as EmpleadoInfo;
         status = request.status
-
-        data.fechaDeIngreso = data.fechaDeIngreso && new Date(data.fechaDeIngreso)
-        data.fechaDeNacimiento = new Date(data.fechaDeNacimiento)
         return data;
     } catch (error:any){
         return null;
@@ -187,5 +185,19 @@ export async function nuevoContrato(request:Request, contrato:Contrato){
             status: 500,
             error: error
         };
+    }
+}
+
+export async function getHistorialProductividad(request:Request, id:string){
+    const requestOptions = await requestOptionsGET(request);
+    let status = 0;
+    try{
+        let request = await fetch(`${url}/empleados/productividad/${id}`, requestOptions);
+        let response = await request.text();
+        let data = JSON.parse(response) as ProductividadMes[];
+        status = request.status
+        return data;
+    } catch (error:any){
+        return null;
     }
 }

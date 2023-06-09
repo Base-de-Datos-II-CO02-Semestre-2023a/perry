@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["browser-route-module:routes/ventas.tsx?browser", "../../../app/routes/ventas.tsx"],
-  "sourcesContent": ["export { default } from \"./routes/ventas.tsx\";", "export default function Ventas() {\r\n\r\n    return (\r\n        <div>\r\n            <h1>Ventas</h1>\r\n        </div>\r\n    );\r\n}"],
-  "mappings": ";;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;;;ACAA;AAAA;AAAA;AAAA;AAAA;AAIY;AAJG,SAAR,SAA0B;AAE7B,SACI,mDAAC,SACG,6DAAC,QAAG,sBAAJ;AAAA;AAAA;AAAA;AAAA,SAAU,KADd;AAAA;AAAA;AAAA;AAAA,SAEA;AAER;",
-  "names": []
-}

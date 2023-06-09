@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["empty-module:~/utils/sessions.server", "../../../app/components/ErrorDialog.tsx"],
-  "sourcesContent": ["module.exports = {};", "export default function ErrorDialog(props: { message: string, title?: string }) {\r\n    return (\r\n        <div className=\"errorDialog\">\r\n            <p className=\"body-medium\">{props.message}</p>\r\n        </div>\r\n    );\r\n}\r\n"],
-  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,WAAO,UAAU,CAAC;AAAA;AAAA;;;ACAlB;AAAA;AAAA;AAAA;AAAA;AAGY;AAHG,SAAR,YAA6B,OAA4C;AAC5E,SACI,mDAAC,SAAI,WAAU,eACX,6DAAC,OAAE,WAAU,eAAe,gBAAM,WAAlC;AAAA;AAAA;AAAA;AAAA,SAA0C,KAD9C;AAAA;AAAA;AAAA;AAAA,SAEA;AAER;",
-  "names": []
-}

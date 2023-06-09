@@ -51,13 +51,6 @@ export default function Index(){
     const openEmpleado = (id:string) => {
         navigate(`/rh/empleados/${id}`);
     };
-    const rows:Row[]=[{
-        id:"ejemploderfc",
-        data:["ejemploderfc23","Ejemplo de nombre","Ejemplo de puesto","$1000","0.95","Ejemplo de lugar","Ejemplo de fecha"]
-    }]
-
-  
-
     return(
         <>
             <SearchBar label={"Buscar empleados por RFC, nombre o correo"}
