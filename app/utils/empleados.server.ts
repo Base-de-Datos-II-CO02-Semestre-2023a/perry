@@ -1,6 +1,6 @@
 import { fetch } from "@remix-run/node";
 import { getUserSession } from "./sessions.server";
-import {postRequestOptions, requestOptionsGET, url} from "./api.config";
+import {patchRequestOptions, postRequestOptions, requestOptionsGET, url} from "./api.config";
 import { badRequest } from "./request.server";
 import { useSearchParams } from "@remix-run/react";
 import { Empleado, EmpleadoEncontrado, EmpleadoInfo, EmpleadoProductivo } from "../types/Empleado";
@@ -199,5 +199,36 @@ export async function getHistorialProductividad(request:Request, id:string){
         return data;
     } catch (error:any){
         return null;
+    }
+}
+
+export async function despedirEmpleado(request:Request, id:string){
+    let status = 0;
+    var requestOptions: RequestInit = await patchRequestOptions(request, {})
+    try{
+        let request = await fetch(`${url}/empleados/despedir/${id}`, requestOptions);
+        let response = await request.text();
+        console.log("response",response)
+        let data = JSON.parse(response);
+        console.log("data",data)
+        status = request.status
+        if (status == 200){
+            return {
+                data,
+                status
+            };
+        } else {
+            return {
+                title: data.title,
+                status: data.status,
+                error: data.detail
+            };
+        }
+    } catch (error:any) {
+        return {
+            title: "Error Interno",
+            status: 500,
+            error: error
+        };
     }
 }

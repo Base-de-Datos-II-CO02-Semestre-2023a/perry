@@ -12,3 +12,15 @@ export type LugarRhBusqueda = {
     productividad:number,
     tipo:string,
 }
+
+export type LugarRhInfo = {
+    id:number,
+    nombre:string,
+    empleados:number,
+    telefono:number,
+    tipo:string,
+    direccion:string,
+    encargado:string,
+    correo:string,
+    promedio:string
+}

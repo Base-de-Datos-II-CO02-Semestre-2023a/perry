@@ -1,4 +1,4 @@
-import { LugarOption, LugarRhBusqueda } from "~/types/Lugar";
+import { LugarOption, LugarRhBusqueda, LugarRhInfo } from "~/types/Lugar";
 import { requestOptionsGET, requestOptionsGetClient, url } from "./api.config";
 
 export async function suggestLugar( token:string, query: string){
@@ -29,5 +29,14 @@ export async function searchAllLugaresRh(request:Request){
     const response = await req.text();
     if (response  === "") return [];
     const lugar = JSON.parse(response) as LugarRhBusqueda[];
+    return lugar;
+}
+
+export async function infoRhLugar(request: Request, id:string){
+    const requestOptions = await requestOptionsGET(request);
+    const req = await fetch(`${url}/lugar/rh/${id   }`, requestOptions)
+    const response = await req.text();
+    if (response === "") return null;
+    const lugar = JSON.parse(response) as LugarRhInfo;
     return lugar;
 }

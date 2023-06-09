@@ -143,7 +143,7 @@ __export(root_exports, {
 var import_node4 = require("@remix-run/node"), import_react2 = require("@remix-run/react");
 
 // app/styles/global.css
-var global_default = "/build/_assets/global-WNN443HC.css";
+var global_default = "/build/_assets/global-ONMGEXLE.css";
 
 // app/utils/sessions.server.ts
 var import_node2 = require("@remix-run/node"), import_node3 = require("@remix-run/node");
@@ -181,6 +181,19 @@ async function postRequestOptions(request, empleado) {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify(empleado),
+    redirect: "follow"
+  };
+  return requestOptions;
+}
+async function patchRequestOptions(request, body) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  let [token, rfc] = await getUserSession(request);
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  var requestOptions = {
+    method: "PATCH",
+    headers: myHeaders,
+    body: JSON.stringify(body),
     redirect: "follow"
   };
   return requestOptions;
@@ -708,11 +721,16 @@ function Tabla(props) {
 }
 
 // app/utils/empleados.server.ts
+var import_node6 = require("@remix-run/node");
+
+// app/utils/request.server.ts
 var import_node5 = require("@remix-run/node");
+
+// app/utils/empleados.server.ts
 async function getEmpleado(request, id) {
   let requestOptions = await requestOptionsGET(request), status = 0;
   try {
-    let request2 = await (0, import_node5.fetch)(`${url}/empleados/${id}`, requestOptions), response = await request2.text(), data = JSON.parse(response);
+    let request2 = await (0, import_node6.fetch)(`${url}/empleados/${id}`, requestOptions), response = await request2.text(), data = JSON.parse(response);
     return status = request2.status, data;
   } catch {
     return null;
@@ -721,7 +739,7 @@ async function getEmpleado(request, id) {
 async function getContarEmpleadosVacaciones(request) {
   let requestOptions = await requestOptionsGET(request), status = 0;
   try {
-    let request2 = await (0, import_node5.fetch)(`${url}/empleados/vacaciones/contar`, requestOptions), response = await request2.text(), data = JSON.parse(response);
+    let request2 = await (0, import_node6.fetch)(`${url}/empleados/vacaciones/contar`, requestOptions), response = await request2.text(), data = JSON.parse(response);
     return status = request2.status, data;
   } catch {
     return null;
@@ -730,7 +748,7 @@ async function getContarEmpleadosVacaciones(request) {
 async function getEmpleadosMasProductivos(request) {
   let requestOptions = await requestOptionsGET(request), status = 0;
   try {
-    let request2 = await (0, import_node5.fetch)(`${url}/empleados/productivos`, requestOptions), response = await request2.text(), data = JSON.parse(response);
+    let request2 = await (0, import_node6.fetch)(`${url}/empleados/productivos`, requestOptions), response = await request2.text(), data = JSON.parse(response);
     return status = request2.status, data;
   } catch {
     return null;
@@ -739,20 +757,20 @@ async function getEmpleadosMasProductivos(request) {
 async function getEmpleadosMenosProductivos(request) {
   let requestOptions = await requestOptionsGET(request), status = 0;
   try {
-    let request2 = await (0, import_node5.fetch)(`${url}/empleados/inproductivos`, requestOptions), response = await request2.text(), data = JSON.parse(response);
+    let request2 = await (0, import_node6.fetch)(`${url}/empleados/inproductivos`, requestOptions), response = await request2.text(), data = JSON.parse(response);
     return status = request2.status, data;
   } catch {
     return null;
   }
 }
 async function getEmpleados(request) {
-  let requestOptions = await requestOptionsGET(request), status = 0, req = await (0, import_node5.fetch)(`${url}/empleados`, requestOptions), response = await req.text(), data = JSON.parse(response);
+  let requestOptions = await requestOptionsGET(request), status = 0, req = await (0, import_node6.fetch)(`${url}/empleados`, requestOptions), response = await req.text(), data = JSON.parse(response);
   return data.forEach((empleado) => {
     empleado.fechaDeIngreso = new Date(empleado.fechaDeIngreso);
   }), status = req.status, data;
 }
 async function buscarEmpleadosPorRFC(request, id) {
-  let status = 0, requestOptions = await requestOptionsGET(request), req = await (0, import_node5.fetch)(`${url}/empleados/buscar/${id}`, requestOptions), response = await req.text(), data = JSON.parse(response);
+  let status = 0, requestOptions = await requestOptionsGET(request), req = await (0, import_node6.fetch)(`${url}/empleados/buscar/${id}`, requestOptions), response = await req.text(), data = JSON.parse(response);
   return status = req.status, data.forEach((empleado) => {
     empleado.fechaDeIngreso = new Date(empleado.fechaDeIngreso);
   }), data;
@@ -761,7 +779,7 @@ async function registrarEmpleado(request, empleado) {
   let status = 0;
   var requestOptions = await postRequestOptions(request, empleado);
   try {
-    let req = await (0, import_node5.fetch)(`${url}/auth/register`, requestOptions), response = await req.text(), data = JSON.parse(response);
+    let req = await (0, import_node6.fetch)(`${url}/auth/register`, requestOptions), response = await req.text(), data = JSON.parse(response);
     return status = req.status, status == 200 ? {
       data,
       status
@@ -782,7 +800,7 @@ async function nuevoContrato(request, contrato) {
   let status = 0;
   var requestOptions = await postRequestOptions(request, contrato);
   try {
-    let req = await (0, import_node5.fetch)(`${url}/contrato`, requestOptions), response = await req.text(), data = JSON.parse(response);
+    let req = await (0, import_node6.fetch)(`${url}/contrato`, requestOptions), response = await req.text(), data = JSON.parse(response);
     return status = req.status, status == 200 ? {
       data,
       status
@@ -802,10 +820,33 @@ async function nuevoContrato(request, contrato) {
 async function getHistorialProductividad(request, id) {
   let requestOptions = await requestOptionsGET(request), status = 0;
   try {
-    let request2 = await (0, import_node5.fetch)(`${url}/empleados/productividad/${id}`, requestOptions), response = await request2.text(), data = JSON.parse(response);
+    let request2 = await (0, import_node6.fetch)(`${url}/empleados/productividad/${id}`, requestOptions), response = await request2.text(), data = JSON.parse(response);
     return status = request2.status, data;
   } catch {
     return null;
+  }
+}
+async function despedirEmpleado(request, id) {
+  let status = 0;
+  var requestOptions = await patchRequestOptions(request, {});
+  try {
+    let request2 = await (0, import_node6.fetch)(`${url}/empleados/despedir/${id}`, requestOptions), response = await request2.text();
+    console.log("response", response);
+    let data = JSON.parse(response);
+    return console.log("data", data), status = request2.status, status == 200 ? {
+      data,
+      status
+    } : {
+      title: data.title,
+      status: data.status,
+      error: data.detail
+    };
+  } catch (error2) {
+    return {
+      title: "Error Interno",
+      status: 500,
+      error: error2
+    };
   }
 }
 
@@ -836,19 +877,19 @@ function Index() {
       !1,
       {
         fileName: "app/routes/rh.empleados._index.tsx",
-        lineNumber: 56,
+        lineNumber: 48,
         columnNumber: 13
       },
       this
     ),
     /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(Tabla, { headers, rows: loaderData.data, onRowSelected: openEmpleado }, void 0, !1, {
       fileName: "app/routes/rh.empleados._index.tsx",
-      lineNumber: 59,
+      lineNumber: 51,
       columnNumber: 13
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/rh.empleados._index.tsx",
-    lineNumber: 55,
+    lineNumber: 47,
     columnNumber: 9
   }, this);
 }
@@ -857,6 +898,7 @@ function Index() {
 var rh_lugares_index_exports = {};
 __export(rh_lugares_index_exports, {
   default: () => Index2,
+  links: () => links2,
   loader: () => loader3
 });
 var import_react10 = require("@remix-run/react");
@@ -965,9 +1007,18 @@ async function searchAllLugaresRh(request) {
   let requestOptions = await requestOptionsGET(request), response = await (await fetch(`${url}/lugar/buscar/rh`, requestOptions)).text();
   return response === "" ? [] : JSON.parse(response);
 }
+async function infoRhLugar(request, id) {
+  let requestOptions = await requestOptionsGET(request), response = await (await fetch(`${url}/lugar/rh/${id}`, requestOptions)).text();
+  return response === "" ? null : JSON.parse(response);
+}
+
+// app/styles/rh.lugares.css
+var rh_lugares_default = "/build/_assets/rh.lugares-C4ZS24X5.css";
 
 // app/routes/rh.lugares._index.tsx
-var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime"), loader3 = async ({ request }) => {
+var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime"), links2 = () => [
+  { rel: "stylesheet", href: rh_lugares_default }
+], loader3 = async ({ request }) => {
   let searchParams = new URL(request.url).searchParams;
   console.log(searchParams);
   let searchValue = searchParams.get("searchValue"), data = [], lugares = [];
@@ -982,32 +1033,33 @@ function Index2() {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_jsx_dev_runtime13.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(SearchBar, { label: "Buscar lugar por nombre" }, void 0, !1, {
       fileName: "app/routes/rh.lugares._index.tsx",
-      lineNumber: 38,
+      lineNumber: 41,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("section", { children: lugares.map((lugar) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(InformacionLugarBuscarRH, { id: lugar.id.toString(), nombre: lugar.nombre, direccion: lugar.direccion, empleados: lugar.empleados, productividad: lugar.productividad, tipo: lugar.tipo, encargado: lugar.nombreEncargado }, lugar.id, !1, {
       fileName: "app/routes/rh.lugares._index.tsx",
-      lineNumber: 42,
-      columnNumber: 28
+      lineNumber: 45,
+      columnNumber: 16
     }, this)) }, void 0, !1, {
       fileName: "app/routes/rh.lugares._index.tsx",
-      lineNumber: 39,
+      lineNumber: 42,
       columnNumber: 9
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/rh.lugares._index.tsx",
-    lineNumber: 37,
-    columnNumber: 12
+    lineNumber: 40,
+    columnNumber: 10
   }, this);
 }
 
 // app/routes/rh.empleados.$id.tsx
 var rh_empleados_id_exports = {};
 __export(rh_empleados_id_exports, {
+  action: () => action,
   default: () => Empleado,
   loader: () => loader4
 });
-var import_node6 = require("@remix-run/node"), import_react12 = require("@remix-run/react");
+var import_node7 = require("@remix-run/node"), import_react13 = require("@remix-run/react"), import_react14 = require("react");
 
 // app/components/Linea.tsx
 var import_react_chartjs_2 = require("react-chartjs-2"), import_chart = require("chart.js");
@@ -1085,8 +1137,97 @@ function GraficaLineas(props) {
   }, this);
 }
 
+// app/components/Overlay.tsx
+var import_react12 = require("react");
+var import_react_router_dom = require("react-router-dom");
+
+// app/components/ErrorDialog.tsx
+var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime");
+function ErrorDialog(props) {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "errorDialog", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("p", { className: "body-medium", children: props.message }, void 0, !1, {
+    fileName: "app/components/ErrorDialog.tsx",
+    lineNumber: 4,
+    columnNumber: 13
+  }, this) }, void 0, !1, {
+    fileName: "app/components/ErrorDialog.tsx",
+    lineNumber: 3,
+    columnNumber: 9
+  }, this);
+}
+
+// app/components/Overlay.tsx
+var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime");
+function Overlay(props) {
+  let [errorMessage, setErrorMesage] = (0, import_react12.useState)(""), fetcher = (0, import_react_router_dom.useFetcher)(), data = fetcher.data;
+  return (0, import_react12.useEffect)(() => {
+    data && (data.status != 200 ? setErrorMesage(data.formError) : fetcher.state == "idle" && (setErrorMesage(""), props.updateData && props.updateData(fetcher.data.data), props.onPrimary && props.onPrimary()));
+  }, [fetcher.state]), /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_jsx_dev_runtime16.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+      "div",
+      {
+        className: "overlayBackground",
+        onClick: props.isCancelable
+      },
+      void 0,
+      !1,
+      {
+        fileName: "app/components/Overlay.tsx",
+        lineNumber: 58,
+        columnNumber: 13
+      },
+      this
+    ),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(fetcher.Form, { method: "post", action: props.action, className: "overlay", children: [
+      errorMessage != "" ? /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(ErrorDialog, { message: errorMessage }, void 0, !1, {
+        fileName: "app/components/Overlay.tsx",
+        lineNumber: 64,
+        columnNumber: 39
+      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_jsx_dev_runtime16.Fragment, {}, void 0, !1, {
+        fileName: "app/components/Overlay.tsx",
+        lineNumber: 64,
+        columnNumber: 80
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("input", { name: "action", hidden: !0, value: props.name, readOnly: !0 }, void 0, !1, {
+        fileName: "app/components/Overlay.tsx",
+        lineNumber: 65,
+        columnNumber: 17
+      }, this),
+      props.children,
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "row buttons", children: [
+        props.onDanger && /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(Button, { type: "submit", variant: "filled", className: "error-container on-error-container-text", label: props.dangerText }, void 0, !1, {
+          fileName: "app/components/Overlay.tsx",
+          lineNumber: 68,
+          columnNumber: 40
+        }, this),
+        props.onPrimary && /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(Button, { type: "submit", variant: "filled", className: "primary", label: props.primaryText }, void 0, !1, {
+          fileName: "app/components/Overlay.tsx",
+          lineNumber: 69,
+          columnNumber: 41
+        }, this),
+        props.onSecundary && /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(Button, { type: "button", variant: "outlined", className: "secondary", label: props.secondaryText, onClick: props.onSecundary }, void 0, !1, {
+          fileName: "app/components/Overlay.tsx",
+          lineNumber: 70,
+          columnNumber: 43
+        }, this)
+      ] }, void 0, !0, {
+        fileName: "app/components/Overlay.tsx",
+        lineNumber: 67,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/components/Overlay.tsx",
+      lineNumber: 63,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/components/Overlay.tsx",
+    lineNumber: 57,
+    columnNumber: 9
+  }, this);
+}
+
 // app/routes/rh.empleados.$id.tsx
-var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime"), loader4 = async ({ request, params }) => {
+var import_jsx_dev_runtime17 = require("react/jsx-dev-runtime"), loader4 = async ({ request, params }) => {
   let empleado = params.id && await getEmpleado(request, params.id), requestProductividad = params.id && empleado && await getHistorialProductividad(request, params.id);
   var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   let productividad = requestProductividad && requestProductividad.map((p) => p.productividad), labels = requestProductividad && requestProductividad.map((p) => meses[p.mes - 1]);
@@ -1096,132 +1237,154 @@ var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime"), loader4 = async
     labels,
     title: empleado.nombre,
     redirect: "/rh/empleados"
-  } : (0, import_node6.redirect)("/rh/empleados");
+  } : (0, import_node7.redirect)("/rh/empleados");
+}, action = async ({ request, params }) => {
+  switch ((await request.formData()).get("action")) {
+    case "despedir":
+      let response = params.id && await despedirEmpleado(request, params.id);
+      return response.status == 200 ? (0, import_node7.redirect)("/rh/empleados") : response;
+  }
+  return null;
 };
 function Empleado() {
-  let matches = (0, import_react12.useMatches)(), loaderData = (0, import_react12.useLoaderData)(), infoEmpleado = loaderData.empleado, dataSets = [
+  let matches = (0, import_react13.useMatches)(), loaderData = (0, import_react13.useLoaderData)(), infoEmpleado = loaderData.empleado, dataSets = [
     {
       label: "Productividad",
       data: loaderData.productividad
     }
-  ];
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_jsx_dev_runtime15.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "row fit wrap no-grow", style: {
+  ], [isDespedirDisplayed, setIsDespedirDisplayed] = (0, import_react14.useState)(!1), onDespedir = async () => {
+    setIsDespedirDisplayed(!1);
+  };
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_jsx_dev_runtime17.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("div", { className: "row fit wrap no-grow", style: {
       justifyContent: "space-between"
     }, children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "RFC", content: infoEmpleado.rfc, variant: "line", type: "filled" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "RFC", content: infoEmpleado.rfc, variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 55,
+        lineNumber: 71,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "NSS", content: infoEmpleado.nss.toString(), variant: "line", type: "filled" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 56,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Telefono", content: infoEmpleado.telefono.toString(), variant: "line", type: "filled" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 57,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Puesto", content: infoEmpleado.puesto, variant: "line", type: "filled" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 58,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Lugar", content: infoEmpleado.nombreLugar, variant: "line", type: "filled" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 59,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Direccion", content: infoEmpleado.direccion, variant: "line", type: "filled" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 60,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionGeneral, { label: "Correo", content: infoEmpleado.correo, variant: "line", type: "filled" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 61,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "row fit grow1", style: {
-        width: "fit-content",
-        justifyContent: "flex-end"
-      }, children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(Button, { type: "button", variant: "filled", className: "primary", label: "Modificar contrato" }, void 0, !1, {
-          fileName: "app/routes/rh.empleados.$id.tsx",
-          lineNumber: 66,
-          columnNumber: 21
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(Button, { type: "button", variant: "outlined", className: "error", label: "Despedir" }, void 0, !1, {
-          fileName: "app/routes/rh.empleados.$id.tsx",
-          lineNumber: 67,
-          columnNumber: 21
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 62,
-        columnNumber: 17
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/rh.empleados.$id.tsx",
-      lineNumber: 52,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "grid-4-3", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.salario, title: "Sueldo", id: "a" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "NSS", content: infoEmpleado.nss.toString(), variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 72,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Vacaciones restantes", id: "b" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "Telefono", content: infoEmpleado.telefono.toString(), variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 73,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Faltas(Disciplinarias)", id: "c" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "Puesto", content: infoEmpleado.puesto, variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 74,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(GraficaLineas, { dataSets, labels: loaderData.labels, id: "d", title: "Historial de productividad" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "Lugar", content: infoEmpleado.nombreLugar, variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 75,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.diasInicio ? infoEmpleado.diasInicio : 1 / 0, title: "D\xEDas en la empresa", id: "e" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "Direccion", content: infoEmpleado.direccion, variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 76,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.diasFin ? infoEmpleado.diasFin : 1 / 0, title: "D\xEDas para fin de contrato", id: "f" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionGeneral, { label: "Correo", content: infoEmpleado.correo, variant: "line", type: "filled" }, void 0, !1, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 77,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Avance de Objetivos", id: "g" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("div", { className: "row fit grow1", style: {
+        width: "fit-content",
+        justifyContent: "flex-end"
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(Button, { type: "button", variant: "filled", className: "primary", label: "Modificar contrato" }, void 0, !1, {
+          fileName: "app/routes/rh.empleados.$id.tsx",
+          lineNumber: 82,
+          columnNumber: 21
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(Button, { type: "button", variant: "outlined", className: "error", label: "Despedir", onClick: () => setIsDespedirDisplayed(!0) }, void 0, !1, {
+          fileName: "app/routes/rh.empleados.$id.tsx",
+          lineNumber: 83,
+          columnNumber: 21
+        }, this)
+      ] }, void 0, !0, {
         fileName: "app/routes/rh.empleados.$id.tsx",
         lineNumber: 78,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Inasistencias", id: "h" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 79,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.indiceProductividad, title: "Indice de productividad", id: "i" }, void 0, !1, {
-        fileName: "app/routes/rh.empleados.$id.tsx",
-        lineNumber: 80,
         columnNumber: 17
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/rh.empleados.$id.tsx",
-      lineNumber: 70,
+      lineNumber: 68,
       columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("div", { className: "grid-4-3", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.salario, title: "Sueldo", id: "a" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 88,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Vacaciones restantes", id: "b" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 89,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Faltas(Disciplinarias)", id: "c" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 90,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(GraficaLineas, { dataSets, labels: loaderData.labels, id: "d", title: "Historial de productividad" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 91,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.diasInicio ? infoEmpleado.diasInicio : 1 / 0, title: "D\xEDas en la empresa", id: "e" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 92,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.diasFin ? infoEmpleado.diasFin : 1 / 0, title: "D\xEDas para fin de contrato", id: "f" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 93,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Avance de Objetivos", id: "g" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 94,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: 0, title: "Inasistencias", id: "h" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 95,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(InformacionCantidad_default, { variant: "grande", type: "filled", cantidad: infoEmpleado.indiceProductividad, title: "Indice de productividad", id: "i" }, void 0, !1, {
+        fileName: "app/routes/rh.empleados.$id.tsx",
+        lineNumber: 96,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/routes/rh.empleados.$id.tsx",
+      lineNumber: 86,
+      columnNumber: 13
+    }, this),
+    isDespedirDisplayed && /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(Overlay, { name: "despedir", action: "", onSecundary: () => setIsDespedirDisplayed(!1), dangerText: "Despedir", secondaryText: "Cancelar", onDanger: () => setIsDespedirDisplayed(!1), isCancelable: () => setIsDespedirDisplayed(!1), children: /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("h1", { className: "title-large", children: [
+      "\xBFEst\xE1s seguro de que quieres despedir a ",
+      infoEmpleado.nombre,
+      "?"
+    ] }, void 0, !0, {
+      fileName: "app/routes/rh.empleados.$id.tsx",
+      lineNumber: 100,
+      columnNumber: 17
+    }, this) }, void 0, !1, {
+      fileName: "app/routes/rh.empleados.$id.tsx",
+      lineNumber: 99,
+      columnNumber: 38
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/rh.empleados.$id.tsx",
-    lineNumber: 51,
+    lineNumber: 67,
     columnNumber: 9
   }, this);
 }
@@ -1229,14 +1392,56 @@ function Empleado() {
 // app/routes/rh.lugares.$id.tsx
 var rh_lugares_id_exports = {};
 __export(rh_lugares_id_exports, {
-  default: () => Lugar
+  default: () => Lugar,
+  links: () => links3,
+  loader: () => loader5
 });
-var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime");
+
+// app/styles/rh.lugares.id.css
+var rh_lugares_id_default = "/build/_assets/rh.lugares.id-OOI7NIN2.css";
+
+// app/routes/rh.lugares.$id.tsx
+var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime"), links3 = () => [{ rel: "stylesheet", href: rh_lugares_id_default }], loader5 = async ({ request, params }) => {
+  let lugarInf = params.id && await infoRhLugar(request, params.id);
+  if (console.log(lugarInf), lugarInf)
+    return {
+      lugarInf,
+      title: lugarInf.nombre,
+      redirect: "/rh/lugares"
+    };
+};
 function Lugar() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("h1", { children: "Lugar" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(import_jsx_dev_runtime18.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { className: "grid-4-3", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(Tabla, { headers: [], rows: [], onRowSelected: function(index) {
+      throw new Error("Function not implemented.");
+    } }, void 0, !1, {
+      fileName: "app/routes/rh.lugares.$id.tsx",
+      lineNumber: 22,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InformacionCantidad_default, { id: "b", variant: "grande", type: "filled", cantidad: 0, title: "" }, void 0, !1, {
+      fileName: "app/routes/rh.lugares.$id.tsx",
+      lineNumber: 25,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InformacionCantidad_default, { id: "c", variant: "grande", type: "filled", cantidad: 0, title: "" }, void 0, !1, {
+      fileName: "app/routes/rh.lugares.$id.tsx",
+      lineNumber: 26,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(InformacionCantidad_default, { id: "d", variant: "grande", type: "filled", cantidad: 0, title: "" }, void 0, !1, {
+      fileName: "app/routes/rh.lugares.$id.tsx",
+      lineNumber: 27,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, !0, {
     fileName: "app/routes/rh.lugares.$id.tsx",
-    lineNumber: 2,
-    columnNumber: 12
+    lineNumber: 21,
+    columnNumber: 9
+  }, this) }, void 0, !1, {
+    fileName: "app/routes/rh.lugares.$id.tsx",
+    lineNumber: 20,
+    columnNumber: 10
   }, this);
 }
 
@@ -1244,13 +1449,13 @@ function Lugar() {
 var rh_empleados_exports = {};
 __export(rh_empleados_exports, {
   default: () => Empleados,
-  loader: () => loader5
+  loader: () => loader6
 });
-var import_react13 = require("@remix-run/react"), import_jsx_dev_runtime17 = require("react/jsx-dev-runtime"), loader5 = async ({ request, params }) => ({
+var import_react15 = require("@remix-run/react"), import_jsx_dev_runtime19 = require("react/jsx-dev-runtime"), loader6 = async ({ request, params }) => ({
   title: "Empleados"
 });
 function Empleados() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_jsx_dev_runtime17.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_react13.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_jsx_dev_runtime19.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_react15.Outlet, {}, void 0, !1, {
     fileName: "app/routes/rh.empleados.tsx",
     lineNumber: 14,
     columnNumber: 9
@@ -1266,9 +1471,9 @@ var asistencia_exports = {};
 __export(asistencia_exports, {
   default: () => Asistencia
 });
-var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime20 = require("react/jsx-dev-runtime");
 function Asistencia() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h1", { children: "Asistencia" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("h1", { children: "Asistencia" }, void 0, !1, {
     fileName: "app/routes/asistencia.tsx",
     lineNumber: 4,
     columnNumber: 13
@@ -1283,29 +1488,20 @@ function Asistencia() {
 var rh_lugares_exports = {};
 __export(rh_lugares_exports, {
   default: () => Lugares,
-  links: () => links2,
-  loader: () => loader6
+  loader: () => loader7
 });
-var import_react14 = require("@remix-run/react");
-
-// app/styles/rhLugares.css
-var rhLugares_default = "/build/_assets/rhLugares-RCUMDIWS.css";
-
-// app/routes/rh.lugares.tsx
-var import_jsx_dev_runtime19 = require("react/jsx-dev-runtime"), links2 = () => [
-  { rel: "stylesheet", href: rhLugares_default }
-], loader6 = async ({ request, params }) => ({
+var import_react16 = require("@remix-run/react"), import_jsx_dev_runtime21 = require("react/jsx-dev-runtime"), loader7 = async ({ request, params }) => ({
   title: "Lugares"
 });
 function Lugares() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_jsx_dev_runtime19.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_react14.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_jsx_dev_runtime21.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_react16.Outlet, {}, void 0, !1, {
     fileName: "app/routes/rh.lugares.tsx",
-    lineNumber: 22,
+    lineNumber: 13,
     columnNumber: 13
   }, this) }, void 0, !1, {
     fileName: "app/routes/rh.lugares.tsx",
-    lineNumber: 21,
-    columnNumber: 10
+    lineNumber: 12,
+    columnNumber: 12
   }, this);
 }
 
@@ -1313,27 +1509,27 @@ function Lugares() {
 var rh_index_exports = {};
 __export(rh_index_exports, {
   ErrorBoundary: () => ErrorBoundary,
-  action: () => action,
+  action: () => action2,
   default: () => Index3,
-  loader: () => loader7
+  loader: () => loader8
 });
-var import_react19 = require("@remix-run/react"), import_react20 = require("react");
+var import_react20 = require("@remix-run/react"), import_react21 = require("react");
 
 // app/components/ExtendedFAB.tsx
-var import_jsx_dev_runtime20 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime22 = require("react/jsx-dev-runtime");
 function ExtendedFAB(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("button", { className: "extended fab " + props.variant, onClick: props.onClick, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(Icon, { icon: props.icon, type: "outlined" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("button", { className: "extended fab " + props.variant, onClick: props.onClick, children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Icon, { icon: props.icon, type: "outlined" }, void 0, !1, {
       fileName: "app/components/ExtendedFAB.tsx",
       lineNumber: 6,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("label", { children: props.label }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("label", { children: props.label }, void 0, !1, {
       fileName: "app/components/ExtendedFAB.tsx",
       lineNumber: 7,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { className: "state-layer on-primary" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("div", { className: "state-layer on-primary" }, void 0, !1, {
       fileName: "app/components/ExtendedFAB.tsx",
       lineNumber: 8,
       columnNumber: 13
@@ -1346,91 +1542,7 @@ function ExtendedFAB(props) {
 }
 
 // app/components/AgregarEmpleadoOverlay.tsx
-var import_react17 = require("@remix-run/react"), import_react18 = require("react");
-
-// app/components/Overlay.tsx
-var import_react15 = require("react");
-var import_react_router_dom = require("react-router-dom");
-
-// app/components/ErrorDialog.tsx
-var import_jsx_dev_runtime21 = require("react/jsx-dev-runtime");
-function ErrorDialog(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("div", { className: "errorDialog", children: /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("p", { className: "body-medium", children: props.message }, void 0, !1, {
-    fileName: "app/components/ErrorDialog.tsx",
-    lineNumber: 4,
-    columnNumber: 13
-  }, this) }, void 0, !1, {
-    fileName: "app/components/ErrorDialog.tsx",
-    lineNumber: 3,
-    columnNumber: 9
-  }, this);
-}
-
-// app/components/Overlay.tsx
-var import_jsx_dev_runtime22 = require("react/jsx-dev-runtime");
-function Overlay(props) {
-  let [errorMessage, setErrorMesage] = (0, import_react15.useState)(""), fetcher = (0, import_react_router_dom.useFetcher)(), data = fetcher.data;
-  return (0, import_react15.useEffect)(() => {
-    data && (data.status != 200 ? setErrorMesage(data.formError) : fetcher.state == "idle" && (setErrorMesage(""), props.updateData && props.updateData(fetcher.data.data), props.onPrimary && props.onPrimary()));
-  }, [fetcher.state]), /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(
-      "div",
-      {
-        className: "overlayBackground",
-        onClick: props.isCancelable
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/components/Overlay.tsx",
-        lineNumber: 56,
-        columnNumber: 13
-      },
-      this
-    ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(fetcher.Form, { method: "post", action: props.action, className: "overlay", children: [
-      errorMessage != "" ? /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(ErrorDialog, { message: errorMessage }, void 0, !1, {
-        fileName: "app/components/Overlay.tsx",
-        lineNumber: 62,
-        columnNumber: 39
-      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, {}, void 0, !1, {
-        fileName: "app/components/Overlay.tsx",
-        lineNumber: 62,
-        columnNumber: 80
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("input", { name: "action", hidden: !0, value: props.name, readOnly: !0 }, void 0, !1, {
-        fileName: "app/components/Overlay.tsx",
-        lineNumber: 63,
-        columnNumber: 17
-      }, this),
-      props.children,
-      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("div", { className: "row buttons", children: [
-        props.onPrimary && /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Button, { type: "submit", variant: "filled", className: "primary", label: props.primaryText }, void 0, !1, {
-          fileName: "app/components/Overlay.tsx",
-          lineNumber: 66,
-          columnNumber: 41
-        }, this),
-        props.onSecundary && /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Button, { type: "button", variant: "outlined", className: "secondary", label: props.secondaryText, onClick: props.onSecundary }, void 0, !1, {
-          fileName: "app/components/Overlay.tsx",
-          lineNumber: 67,
-          columnNumber: 43
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/components/Overlay.tsx",
-        lineNumber: 65,
-        columnNumber: 17
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/components/Overlay.tsx",
-      lineNumber: 61,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/components/Overlay.tsx",
-    lineNumber: 55,
-    columnNumber: 9
-  }, this);
-}
+var import_react18 = require("@remix-run/react"), import_react19 = require("react");
 
 // app/utils/ciudad.api.ts
 async function suggestCiudad(token, query) {
@@ -1439,7 +1551,7 @@ async function suggestCiudad(token, query) {
 }
 
 // app/components/NuevoContratoOverlay.tsx
-var import_react16 = require("react");
+var import_react17 = require("react");
 var import_jsx_dev_runtime23 = require("react/jsx-dev-runtime"), registrarNuevoContrato = async (form, request) => {
   let empleado = form.get("empleado"), puesto = form.get("puesto"), lugar = form.get("lugar");
   lugar = parseInt(lugar);
@@ -1471,9 +1583,9 @@ var import_jsx_dev_runtime23 = require("react/jsx-dev-runtime"), registrarNuevoC
   };
 };
 function NuevoContratoOverlay(props) {
-  let [startDate, setStartDate] = (0, import_react16.useState)(/* @__PURE__ */ new Date()), updateStartDate = (e) => {
+  let [startDate, setStartDate] = (0, import_react17.useState)(/* @__PURE__ */ new Date()), updateStartDate = (e) => {
     setStartDate(new Date(e.currentTarget.value));
-  }, ref = (0, import_react16.useRef)(null), puestos = [
+  }, ref = (0, import_react17.useRef)(null), puestos = [
     {
       name: "Recursos Humanos",
       value: "Recursos_Humanos"
@@ -1670,12 +1782,12 @@ var import_jsx_dev_runtime24 = require("react/jsx-dev-runtime"), agregarEmpleado
   };
 };
 function AgregarEmpleadoOverlay(props) {
-  let [rfc, setRfc] = (0, import_react18.useState)(""), [newContrato, setNewContrato] = (0, import_react18.useState)(!1), fetcher = (0, import_react17.useFetcher)(), onRfcChange = (e) => {
+  let [rfc, setRfc] = (0, import_react19.useState)(""), [newContrato, setNewContrato] = (0, import_react19.useState)(!1), fetcher = (0, import_react18.useFetcher)(), onRfcChange = (e) => {
     let rfcU = e.target.value;
     rfcU = rfcU.toUpperCase(), setRfc(rfcU);
   }, onEmpleadoAgregado = () => {
     props.setDisplayed(!1), setNewContrato(!0);
-  }, [id, setId] = (0, import_react18.useState)(), [nombre, setNombre] = (0, import_react18.useState)(""), updateData = (data) => {
+  }, [id, setId] = (0, import_react19.useState)(), [nombre, setNombre] = (0, import_react19.useState)(""), updateData = (data) => {
     console.log(data), setId(data.id), setNombre(data.nombre);
   }, suggestCiudades = async (val) => {
     let sCiudad = [];
@@ -1969,7 +2081,7 @@ function AgregarEmpleadoOverlay(props) {
 }
 
 // app/routes/rh._index.tsx
-var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime"), loader7 = async ({ request, params }) => {
+var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime"), loader8 = async ({ request, params }) => {
   let empleados = await getEmpleadosMasProductivos(request), productivos = [];
   empleados && (productivos = empleados.map((empleado) => ({
     id: empleado.id,
@@ -1988,7 +2100,7 @@ var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime"), loader7 = async
     token,
     empleadosVacaciones
   };
-}, action = async ({ request }) => {
+}, action2 = async ({ request }) => {
   let fromulario = await request.formData();
   switch (fromulario.get("action")) {
     case "agregarEmpleado":
@@ -2002,7 +2114,7 @@ var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime"), loader7 = async
   };
 };
 function Index3() {
-  let navigate = (0, import_react19.useNavigate)(), matches = (0, import_react19.useMatches)(), actionData = (0, import_react19.useActionData)(), loaderData = (0, import_react19.useLoaderData)(), [newEmpleado, setNewEmpleado] = (0, import_react20.useState)(!1), openEmpleado = (id) => {
+  let navigate = (0, import_react20.useNavigate)(), matches = (0, import_react20.useMatches)(), actionData = (0, import_react20.useActionData)(), loaderData = (0, import_react20.useLoaderData)(), [newEmpleado, setNewEmpleado] = (0, import_react21.useState)(!1), openEmpleado = (id) => {
     navigate(`/rh/empleados/${id}?redirectTo=%2f`);
   }, headers = ["Nombre", "Prod"];
   return /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_jsx_dev_runtime25.Fragment, { children: [
@@ -2114,8 +2226,8 @@ function Index3() {
   }, this);
 }
 function ErrorBoundary() {
-  let error2 = (0, import_react19.useRouteError)();
-  return (0, import_react19.isRouteErrorResponse)(error2) ? /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("div", { className: "error-container", children: [
+  let error2 = (0, import_react20.useRouteError)();
+  return (0, import_react20.isRouteErrorResponse)(error2) ? /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("div", { className: "error-container", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h1", { children: [
       error2.status,
       " ",
@@ -2169,11 +2281,11 @@ function ErrorBoundary() {
 // app/routes/logout.tsx
 var logout_exports = {};
 __export(logout_exports, {
-  action: () => action2,
-  loader: () => loader8
+  action: () => action3,
+  loader: () => loader9
 });
-var import_node7 = require("@remix-run/node");
-var action2 = async ({ request }) => logout(request), loader8 = async () => (0, import_node7.redirect)("/");
+var import_node8 = require("@remix-run/node");
+var action3 = async ({ request }) => logout(request), loader9 = async () => (0, import_node8.redirect)("/");
 
 // app/routes/ventas.tsx
 var ventas_exports = {};
@@ -2196,22 +2308,22 @@ function Ventas() {
 // app/routes/login.tsx
 var login_exports = {};
 __export(login_exports, {
-  action: () => action3,
+  action: () => action4,
   default: () => Login,
-  links: () => links3,
-  loader: () => loader9
+  links: () => links4,
+  loader: () => loader10
 });
-var import_node8 = require("@remix-run/node"), import_react21 = require("react");
+var import_node9 = require("@remix-run/node"), import_react22 = require("react");
 
 // app/styles/login.css
 var login_default = "/build/_assets/login-P2MW232P.css";
 
 // app/routes/login.tsx
-var import_react22 = require("@remix-run/react");
-var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime"), links3 = () => [{ rel: "stylesheet", href: login_default }], loader9 = async ({ request }) => {
+var import_react23 = require("@remix-run/react");
+var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime"), links4 = () => [{ rel: "stylesheet", href: login_default }], loader10 = async ({ request }) => {
   let [token, user, puesto] = await getUserSession(request);
-  return token ? (0, import_node8.redirect)("/") : null;
-}, action3 = async ({ request }) => {
+  return token ? (0, import_node9.redirect)("/") : null;
+}, action4 = async ({ request }) => {
   let form = await request.formData(), user = form.get("user"), password = form.get("password"), redirectTo = form.get("redirectTo");
   if (user != "" && password != "") {
     var response = await login(user, password, redirectTo);
@@ -2220,7 +2332,7 @@ var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime"), links3 = () => 
   return { formError: "Favor de llenar los campos" };
 };
 function Login() {
-  let [isRfcValid, setIsRfcValid] = (0, import_react21.useState)(!0), [isPasswordValid, setIsPasswordValid] = (0, import_react21.useState)(!0), [rfc, setRfc] = (0, import_react21.useState)(""), actionData = (0, import_react22.useActionData)(), [messageError, setMessageError] = (0, import_react21.useState)((actionData == null ? void 0 : actionData.formError) || ""), [searchParams] = (0, import_react22.useSearchParams)();
+  let [isRfcValid, setIsRfcValid] = (0, import_react22.useState)(!0), [isPasswordValid, setIsPasswordValid] = (0, import_react22.useState)(!0), [rfc, setRfc] = (0, import_react22.useState)(""), actionData = (0, import_react23.useActionData)(), [messageError, setMessageError] = (0, import_react22.useState)((actionData == null ? void 0 : actionData.formError) || ""), [searchParams] = (0, import_react23.useSearchParams)();
   function validateRfc(event) {
     let rfc2 = event.target.value;
     setRfc(event.target.value.toUpperCase()), setMessageError(""), rfc2.length === 0 ? (setIsRfcValid(!1), setMessageError("El RFC no puede estar vac\xEDo")) : rfc2.length < 12 ? (setIsRfcValid(!1), setMessageError("El RFC debe tener al menos 12 caracteres")) : (setIsRfcValid(!0), setMessageError(""));
@@ -2279,20 +2391,20 @@ function Login() {
 var rh_exports = {};
 __export(rh_exports, {
   default: () => rh,
-  links: () => links4,
-  loader: () => loader10
+  links: () => links5,
+  loader: () => loader11
 });
-var import_react26 = require("@remix-run/react");
+var import_react27 = require("@remix-run/react");
 
 // app/components/Hero.tsx
-var import_react24 = require("react");
+var import_react25 = require("react");
 
 // app/components/Title.tsx
-var import_react23 = require("@remix-run/react");
+var import_react24 = require("@remix-run/react");
 var import_jsx_dev_runtime28 = require("react/jsx-dev-runtime");
 function Title2() {
-  let [searchParams] = (0, import_react23.useSearchParams)(), redirectTo = searchParams.get("redirectTo"), match = (0, import_react23.useMatches)().filter((match2) => match2.data && match2.data.title).pop();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_jsx_dev_runtime28.Fragment, { children: match != null && match.data.title && match.data.redirect ? /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_react23.Link, { to: redirectTo || match.data.redirect, className: "display-small on-surface-text title", children: [
+  let [searchParams] = (0, import_react24.useSearchParams)(), redirectTo = searchParams.get("redirectTo"), match = (0, import_react24.useMatches)().filter((match2) => match2.data && match2.data.title).pop();
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_jsx_dev_runtime28.Fragment, { children: match != null && match.data.title && match.data.redirect ? /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_react24.Link, { to: redirectTo || match.data.redirect, className: "display-small on-surface-text title", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(Icon, { icon: "arrow_back_ios", type: "outlined" }, void 0, !1, {
       fileName: "app/components/Title.tsx",
       lineNumber: 29,
@@ -2317,10 +2429,10 @@ function Title2() {
 // app/components/Hero.tsx
 var import_jsx_dev_runtime29 = require("react/jsx-dev-runtime");
 function Hero() {
-  let [time, setTime] = (0, import_react24.useState)(""), updateTime = () => {
+  let [time, setTime] = (0, import_react25.useState)(""), updateTime = () => {
     setTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
   };
-  return (0, import_react24.useEffect)(() => {
+  return (0, import_react25.useEffect)(() => {
     updateTime();
     let interval = setInterval(updateTime, 1e3);
     return () => clearInterval(interval);
@@ -2354,10 +2466,10 @@ function Hero() {
 }
 
 // app/components/NavItem.tsx
-var import_react25 = require("@remix-run/react");
+var import_react26 = require("@remix-run/react");
 var import_jsx_dev_runtime30 = require("react/jsx-dev-runtime");
 function NavItem(props) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_react25.NavLink, { prefetch: "render", to: props.link, className: ({ isActive, isPending }) => "navItem " + (isPending || isActive ? "selected" : ""), end: props.end, children: ({ isActive, isPending }) => /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: [
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_react26.NavLink, { prefetch: "render", to: props.link, className: ({ isActive, isPending }) => "navItem " + (isPending || isActive ? "selected" : ""), end: props.end, children: ({ isActive, isPending }) => /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(Icon, { icon: props.icon, type: isActive ? "filled" : "outlined" }, void 0, !1, {
       fileName: "app/components/NavItem.tsx",
       lineNumber: 13,
@@ -2439,9 +2551,9 @@ function NavigationDrawer(props) {
 var rh_default = "/build/_assets/rh-3MFNDQMZ.css";
 
 // app/routes/rh.tsx
-var import_jsx_dev_runtime32 = require("react/jsx-dev-runtime"), loader10 = async ({ request, params }) => ({
+var import_jsx_dev_runtime32 = require("react/jsx-dev-runtime"), loader11 = async ({ request, params }) => ({
   title: "Recursos Humanos"
-}), links4 = () => [{ rel: "stylesheet", href: rh_default }];
+}), links5 = () => [{ rel: "stylesheet", href: rh_default }];
 function rh() {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_jsx_dev_runtime32.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(NavigationDrawer, { links: [{
@@ -2468,7 +2580,7 @@ function rh() {
         lineNumber: 52,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_react26.Outlet, {}, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_react27.Outlet, {}, void 0, !1, {
         fileName: "app/routes/rh.tsx",
         lineNumber: 53,
         columnNumber: 17
@@ -2486,7 +2598,7 @@ function rh() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-RKRO4FBD.js", imports: ["/build/_shared/chunk-N6LPIHUN.js", "/build/_shared/chunk-LVPVSEIS.js", "/build/_shared/chunk-7HUBQURA.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-YIUHMD2Z.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/asistencia": { id: "routes/asistencia", parentId: "root", path: "asistencia", index: void 0, caseSensitive: void 0, module: "/build/routes/asistencia-UTY6FPXU.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-LBOAMQC7.js", imports: ["/build/_shared/chunk-ZMLSXUPG.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-SAG47ILP.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh": { id: "routes/rh", parentId: "root", path: "rh", index: void 0, caseSensitive: void 0, module: "/build/routes/rh-BYAYO2MY.js", imports: ["/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh._index": { id: "routes/rh._index", parentId: "routes/rh", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh._index-ORX5D6BY.js", imports: ["/build/_shared/chunk-ZMLSXUPG.js", "/build/_shared/chunk-RXFURBB3.js", "/build/_shared/chunk-AQ4QIAVY.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-BHAJL77W.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/rh.empleados": { id: "routes/rh.empleados", parentId: "routes/rh", path: "empleados", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados-64NZ2TYO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados.$id": { id: "routes/rh.empleados.$id", parentId: "routes/rh.empleados", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados.$id-3HLHTPVR.js", imports: ["/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-BHAJL77W.js", "/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados._index": { id: "routes/rh.empleados._index", parentId: "routes/rh.empleados", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.empleados._index-V35SOA73.js", imports: ["/build/_shared/chunk-RXFURBB3.js", "/build/_shared/chunk-2UW2VS4J.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares": { id: "routes/rh.lugares", parentId: "routes/rh", path: "lugares", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares-BY65NTGR.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares.$id": { id: "routes/rh.lugares.$id", parentId: "routes/rh.lugares", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares.$id-Z6FUORBG.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares._index": { id: "routes/rh.lugares._index", parentId: "routes/rh.lugares", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.lugares._index-Y6XS3GHM.js", imports: ["/build/_shared/chunk-AQ4QIAVY.js", "/build/_shared/chunk-2UW2VS4J.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-BHAJL77W.js", "/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/ventas": { id: "routes/ventas", parentId: "root", path: "ventas", index: void 0, caseSensitive: void 0, module: "/build/routes/ventas-LNDDPCDE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, version: "aefa135f", hmr: void 0, url: "/build/manifest-AEFA135F.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-RKRO4FBD.js", imports: ["/build/_shared/chunk-N6LPIHUN.js", "/build/_shared/chunk-LVPVSEIS.js", "/build/_shared/chunk-7HUBQURA.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-HRZNANZC.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/asistencia": { id: "routes/asistencia", parentId: "root", path: "asistencia", index: void 0, caseSensitive: void 0, module: "/build/routes/asistencia-UTY6FPXU.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-62WVHFBY.js", imports: ["/build/_shared/chunk-N7IJC4RR.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-54NLIHTE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-SAG47ILP.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh": { id: "routes/rh", parentId: "root", path: "rh", index: void 0, caseSensitive: void 0, module: "/build/routes/rh-BYAYO2MY.js", imports: ["/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh._index": { id: "routes/rh._index", parentId: "routes/rh", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh._index-ODV3EZUV.js", imports: ["/build/_shared/chunk-N7IJC4RR.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-VKTP2QZQ.js", "/build/_shared/chunk-54NLIHTE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-RXFURBB3.js", "/build/_shared/chunk-GLVTGASS.js", "/build/_shared/chunk-BHAJL77W.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/rh.empleados": { id: "routes/rh.empleados", parentId: "routes/rh", path: "empleados", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados-64NZ2TYO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados.$id": { id: "routes/rh.empleados.$id", parentId: "routes/rh.empleados", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.empleados.$id-ZB5QYU3S.js", imports: ["/build/_shared/chunk-VKTP2QZQ.js", "/build/_shared/chunk-54NLIHTE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js", "/build/_shared/chunk-BHAJL77W.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.empleados._index": { id: "routes/rh.empleados._index", parentId: "routes/rh.empleados", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.empleados._index-SUSTA4MI.js", imports: ["/build/_shared/chunk-2UW2VS4J.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-EXC7EP7V.js", "/build/_shared/chunk-4AHASGKT.js", "/build/_shared/chunk-RXFURBB3.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares": { id: "routes/rh.lugares", parentId: "routes/rh", path: "lugares", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares-GWBL5VBE.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares.$id": { id: "routes/rh.lugares.$id", parentId: "routes/rh.lugares", path: ":id", index: void 0, caseSensitive: void 0, module: "/build/routes/rh.lugares.$id-MIZ3DLP7.js", imports: ["/build/_shared/chunk-RXFURBB3.js", "/build/_shared/chunk-GLVTGASS.js", "/build/_shared/chunk-BHAJL77W.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/rh.lugares._index": { id: "routes/rh.lugares._index", parentId: "routes/rh.lugares", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/rh.lugares._index-26O7PJTP.js", imports: ["/build/_shared/chunk-2UW2VS4J.js", "/build/_shared/chunk-VTTY5W27.js", "/build/_shared/chunk-3CWV75LE.js", "/build/_shared/chunk-GJNIKCAE.js", "/build/_shared/chunk-4AHASGKT.js", "/build/_shared/chunk-GLVTGASS.js", "/build/_shared/chunk-BHAJL77W.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/ventas": { id: "routes/ventas", parentId: "root", path: "ventas", index: void 0, caseSensitive: void 0, module: "/build/routes/ventas-LNDDPCDE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, version: "ed4db48f", hmr: void 0, url: "/build/manifest-ED4DB48F.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public\\build", future = { unstable_dev: !1, unstable_postcss: !1, unstable_tailwind: !1, v2_errorBoundary: !0, v2_meta: !0, v2_normalizeFormMethod: !0, v2_routeConvention: !0 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

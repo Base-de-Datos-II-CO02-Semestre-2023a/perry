@@ -1,12 +1,10 @@
 {
   "private": true,
-  "sideEffects": false,
+  "sideEffects": true,
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
-    "typecheck": "tsc",
-    "cosmos": "cosmos",
-    "cosmos:export": "cosmos-export"
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@remix-run/css-bundle": "^1.16.1",
@@ -27,7 +25,6 @@
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.38.0",
-    "react-cosmos": "^5.7.2",
     "typescript": "^5.0.4"
   },
   "engines": {

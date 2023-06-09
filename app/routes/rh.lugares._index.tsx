@@ -1,12 +1,15 @@
-import { LoaderArgs, LoaderFunction } from "@remix-run/node";
+import { LinksFunction, LoaderArgs, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import InformacionLugarBuscarRH from "~/components/InformacionLugarRH";
 import SearchBar from "~/components/SearchBar";
-import { Row } from "~/components/Tabla";
-import { EmpleadoEncontrado } from "~/types/Empleado";
 import { LugarRhBusqueda } from "~/types/Lugar";
-import { buscarEmpleadosPorRFC, getEmpleados } from "~/utils/empleados.server";
 import { searchAllLugaresRh, searchLugarRh } from "~/utils/lugar.api";
+import  rhLugaresStylesUrl  from "~/styles/rh.lugares.css";
+export const links: LinksFunction = () => {
+    return [
+        { rel: "stylesheet", href: rhLugaresStylesUrl },
+    ];
+}
 
 export const loader: LoaderFunction = async ({ request }:LoaderArgs) => {
     const url = new URL(request.url);

@@ -1,12 +1,4 @@
 import { LoaderArgs, LoaderFunction } from "@remix-run/node";
-import FAB from "~/components/FAB";
-import InformacionCantidad from "~/components/InformacionCantidad";
-import InformacionDinero from "~/components/InformacionDinero";
-import InformacionGeneral from "~/components/InformacionGeneral";
-import Title from "~/components/Title";
-import { Option } from "~/components/InputMenu";
-import InputMenu from "~/components/InputMenu";
-import TextField from "~/components/TextField";
 import SearchBar from "~/components/SearchBar";
 import { useActionData, useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 import Tabla, { Header, Row } from "~/components/Tabla";

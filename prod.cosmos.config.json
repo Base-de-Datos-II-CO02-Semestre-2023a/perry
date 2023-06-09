@@ -1,6 +1,0 @@
-{
-    "staticPath": "public",
-    "watchDirs": ["app"],
-    "userDepsFilePath": "app/cosmos.userdeps.js",
-    "experimentalRendererUrl": "https://whereveryourappishosted:3000/cosmos"
-  }

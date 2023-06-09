@@ -24,9 +24,11 @@ export default function Overlay(props: {
     isCancelable?: () => any
     primaryText?: string,
     secondaryText?: string,
-    name: string;
-    action: string;
-    updateData?:(data: any) => void
+    name: string,
+    action: string,
+    updateData?:(data: any) => void,
+    onDanger?: () => any,
+    dangerText?: string,
 }) {
     const [errorMessage, setErrorMesage] = useState<string>("")
     const fetcher = useFetcher()
@@ -63,6 +65,7 @@ export default function Overlay(props: {
                 <input name="action" hidden value={props.name} readOnly></input>
                 {props.children}
                 <div className="row buttons">
+                    {props.onDanger && <Button type={"submit"} variant={"filled"} className="error-container on-error-container-text" label={props.dangerText} />}
                     {props.onPrimary && <Button type={"submit"} variant={"filled"} className="primary" label={props.primaryText} />}
                     {props.onSecundary && <Button type={"button"} variant={"outlined"} className="secondary" label={props.secondaryText} onClick={props.onSecundary} />}
                 </div>

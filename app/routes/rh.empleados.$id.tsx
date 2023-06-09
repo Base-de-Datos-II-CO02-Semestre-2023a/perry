@@ -1,15 +1,14 @@
-import { LoaderArgs, LoaderFunction, json, redirect } from "@remix-run/node";
-import { useLoaderData, useMatches, useSearchParams } from "@remix-run/react";
-import { useEffect } from "react";
-import { getEmpleado, getHistorialProductividad } from "~/utils/empleados.server";
+import { ActionArgs, ActionFunction, LoaderArgs, LoaderFunction, json, redirect } from "@remix-run/node";
+import { useLoaderData, useMatches } from "@remix-run/react";
+import { useState } from "react";
+import { despedirEmpleado, getEmpleado, getHistorialProductividad } from "~/utils/empleados.server";
 import { Empleado, EmpleadoInfo } from "~/types/Empleado";
 import InformacionGeneral from "~/components/InformacionGeneral";
 import Button from "~/components/Button";
 import InformacionCantidad from "~/components/InformacionCantidad";
-import { Line } from "react-chartjs-2";
-import { ChartData } from "chart.js";
-import Linea, { dataSet } from "~/components/Linea";
+import { dataSet } from "~/components/Linea";
 import GraficaLineas from "~/components/Linea";
+import Overlay from "~/components/Overlay";
 
 export const loader: LoaderFunction = async ({ request, params }: LoaderArgs) => {
 
@@ -37,6 +36,19 @@ export const loader: LoaderFunction = async ({ request, params }: LoaderArgs) =>
     return redirect("/rh/empleados");
 }
 
+export const action: ActionFunction = async ({request, params}:ActionArgs) => {
+    const form = await request.formData();    
+    const action = form.get("action");
+    switch(action){
+        case "despedir":
+            const response = params.id && await despedirEmpleado(request, params.id);
+            
+
+            if(response.status == 200) return redirect( "/rh/empleados");
+            else return response;
+    }
+    return null;
+}
 export default function Empleado() {
     const matches = useMatches()
     const loaderData = useLoaderData<typeof loader>();
@@ -44,8 +56,12 @@ export default function Empleado() {
     const dataSets = [{
         label: "Productividad",
         data: loaderData.productividad,
+        }
+    ] as dataSet[];
+    const [isDespedirDisplayed, setIsDespedirDisplayed] = useState(false);
+    const onDespedir = async () => {
+        setIsDespedirDisplayed(false);
     }
- ] as dataSet[];
 
     return (
         <>
@@ -64,7 +80,7 @@ export default function Empleado() {
                     justifyContent: "flex-end"
                 }}>
                     <Button type={"button"} variant={"filled"} className="primary" label="Modificar contrato" />
-                    <Button type={"button"} variant={"outlined"} className="error" label="Despedir" />
+                    <Button type={"button"} variant={"outlined"} className="error" label="Despedir" onClick={()=>setIsDespedirDisplayed(true)} />
                 </div>
             </div>
             <div className="grid-4-3">
@@ -80,6 +96,9 @@ export default function Empleado() {
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={infoEmpleado.indiceProductividad} title={"Indice de productividad"} id="i" />
 
             </div>
+            { isDespedirDisplayed && <Overlay name={"despedir"} action={""} onSecundary={()=>setIsDespedirDisplayed(false)} dangerText="Despedir" secondaryText="Cancelar" onDanger={()=>setIsDespedirDisplayed(false)} isCancelable={()=>setIsDespedirDisplayed(false)} >
+                <h1 className="title-large">¿Estás seguro de que quieres despedir a {infoEmpleado.nombre}?</h1>
+            </Overlay>}
 
         </>
 
