@@ -3,8 +3,9 @@ import { useLoaderData } from "@remix-run/react";
 import InformacionLugarBuscarRH from "~/components/InformacionLugarRH";
 import SearchBar from "~/components/SearchBar";
 import { LugarRhBusqueda } from "~/types/Lugar";
-import { searchAllLugaresRh, searchLugarRh } from "~/utils/lugar.api";
+import { getContratosConcluir, searchAllLugaresRh, searchLugarRh } from "~/utils/lugar.api";
 import  rhLugaresStylesUrl  from "~/styles/rh.lugares.css";
+
 export const links: LinksFunction = () => {
     return [
         { rel: "stylesheet", href: rhLugaresStylesUrl },
@@ -30,7 +31,7 @@ export const loader: LoaderFunction = async ({ request }:LoaderArgs) => {
     return {
         searchValue,
         title:"Empleados",
-        data
+        data,
     };
 }
 

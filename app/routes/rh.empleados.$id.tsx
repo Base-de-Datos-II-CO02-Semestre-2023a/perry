@@ -1,14 +1,22 @@
-import { ActionArgs, ActionFunction, LoaderArgs, LoaderFunction, json, redirect } from "@remix-run/node";
+import { ActionArgs, ActionFunction, LinksFunction, LoaderArgs, LoaderFunction, redirect } from "@remix-run/node";
 import { useLoaderData, useMatches } from "@remix-run/react";
 import { useState } from "react";
 import { despedirEmpleado, getEmpleado, getHistorialProductividad } from "~/utils/empleados.server";
-import { Empleado, EmpleadoInfo } from "~/types/Empleado";
+import { EmpleadoInfo } from "~/types/Empleado";
 import InformacionGeneral from "~/components/InformacionGeneral";
 import Button from "~/components/Button";
 import InformacionCantidad from "~/components/InformacionCantidad";
 import { dataSet } from "~/components/Linea";
+
 import GraficaLineas from "~/components/Linea";
 import Overlay from "~/components/Overlay";
+
+import css from "~/styles/rh.empleados.id.css"
+
+export const links: LinksFunction = ()=>{
+    return[{href: css, rel:"stylesheet"}];
+}
+
 
 export const loader: LoaderFunction = async ({ request, params }: LoaderArgs) => {
 
@@ -49,6 +57,9 @@ export const action: ActionFunction = async ({request, params}:ActionArgs) => {
     }
     return null;
 }
+
+
+
 export default function Empleado() {
     const matches = useMatches()
     const loaderData = useLoaderData<typeof loader>();
@@ -59,9 +70,7 @@ export default function Empleado() {
         }
     ] as dataSet[];
     const [isDespedirDisplayed, setIsDespedirDisplayed] = useState(false);
-    const onDespedir = async () => {
-        setIsDespedirDisplayed(false);
-    }
+
 
     return (
         <>
@@ -84,7 +93,6 @@ export default function Empleado() {
                 </div>
             </div>
             <div className="grid-4-3">
-
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={infoEmpleado.salario} title={"Sueldo"} id='a' />
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={0} title={"Vacaciones restantes"} id='b' />
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={0} title={"Faltas(Disciplinarias)"} id='c' />
@@ -93,8 +101,7 @@ export default function Empleado() {
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={infoEmpleado.diasFin ? infoEmpleado.diasFin : Infinity} title={"Días para fin de contrato"} id="f" />
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={0} title={"Avance de Objetivos"} id="g" />
                 <InformacionCantidad variant={"grande"} type={"filled"} cantidad={0} title={"Inasistencias"} id="h" />
-                <InformacionCantidad variant={"grande"} type={"filled"} cantidad={infoEmpleado.indiceProductividad} title={"Indice de productividad"} id="i" />
-
+                <InformacionCantidad variant={"grande"} type={"filled"} cantidad={parseFloat(infoEmpleado.indiceProductividad.toFixed(2))} title={"Indice de productividad"} id="i" />
             </div>
             { isDespedirDisplayed && <Overlay name={"despedir"} action={""} onSecundary={()=>setIsDespedirDisplayed(false)} dangerText="Despedir" secondaryText="Cancelar" onDanger={()=>setIsDespedirDisplayed(false)} isCancelable={()=>setIsDespedirDisplayed(false)} >
                 <h1 className="title-large">¿Estás seguro de que quieres despedir a {infoEmpleado.nombre}?</h1>

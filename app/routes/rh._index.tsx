@@ -6,12 +6,13 @@ import FAB from "~/components/FAB";
 import InformacionCantidad from "~/components/InformacionCantidad";
 import Tabla, { Header, Row } from "~/components/Tabla";
 import { Empleado } from "~/types/Empleado";
-import { getContarEmpleadosVacaciones, getEmpleadosMasProductivos, getEmpleadosMenosProductivos, registrarEmpleado } from "~/utils/empleados.server";
+import { getContarEmpleadosVacaciones, getEmpleadosMasProductivos, getEmpleadosMenosProductivos, getPromedioProductividad, registrarEmpleado } from "~/utils/empleados.server";
 import { getUserSession } from "~/utils/sessions.server";
 import { AgregarEmpleadoOverlay, agregarEmpleado } from "../components/AgregarEmpleadoOverlay";
 import Overlay from "~/components/Overlay";
 import InformacionGeneral from "~/components/InformacionGeneral";
 import { registrarNuevoContrato } from "~/components/NuevoContratoOverlay";
+import { getContratosConcluir } from "~/utils/contratos.api";
 
 export const loader: LoaderFunction = async ({ request, params }: LoaderArgs) => {
     
@@ -43,12 +44,16 @@ export const loader: LoaderFunction = async ({ request, params }: LoaderArgs) =>
     let response = await getContarEmpleadosVacaciones(request);
     const empleadosVacaciones = response?.empleados;
 
+    const productividad =await getPromedioProductividad(request);
+
     return {
         title: "Inicio",
         productivos,
         inproductivos,
         token,
-        empleadosVacaciones
+        empleadosVacaciones,
+        contratos: await getContratosConcluir(request),
+        productividad
     };
 }
 
@@ -91,11 +96,11 @@ export default function Index() {
     return (
         <>
             <div className="actionsBar">
-                <ExtendedFAB icon="add" label="Crear objetivo" variant="primary" onClick={() => { }} />
-                <ExtendedFAB icon="add" label="Registrar falta" variant="primary" onClick={() => { }} />
+                {/*<ExtendedFAB icon="add" label="Crear objetivo" variant="primary" onClick={() => { }} />
+                <ExtendedFAB icon="add" label="Registrar falta" variant="primary" onClick={() => { }} />*/}
                 <ExtendedFAB icon="add" label="Nuevo empleado" variant="tertiary" onClick={() => { setNewEmpleado(true) }} />
-                <ExtendedFAB icon="sync_alt" label="Transferir empleado" variant="primary" onClick={() => { }} />
-                <ExtendedFAB icon="edit" label="Modificar contrato" variant="primary" onClick={() => { }} />
+                {/*<ExtendedFAB icon="sync_alt" label="Transferir empleado" variant="primary" onClick={() => { }} />
+                <ExtendedFAB icon="edit" label="Modificar contrato" variant="primary" onClick={() => { }} />*/}
             </div>  
             <div className="row">
                 <section className="card">
@@ -108,8 +113,8 @@ export default function Index() {
                 </section>
                 <section className="column fit">
                     <InformacionCantidad variant="grande" type="filled" cantidad={loaderData.empleadosVacaciones} title="Empleados de vacaciones" />
-                    <InformacionCantidad variant="grande" type="filled" cantidad={56} title="Contratos proximos a concluir" />
-                    <InformacionCantidad variant="grande" type="filled" cantidad={56} title="Promedio de productividad" />
+                    <InformacionCantidad variant="grande" type="filled" cantidad={loaderData.contratos} title="Contratos proximos a concluir" />
+                    <InformacionCantidad variant="grande" type="filled" cantidad={loaderData.productividad} title="Promedio de productividad" />
                 </section>
             </div>
             <AgregarEmpleadoOverlay isDisplayed={newEmpleado} setDisplayed={setNewEmpleado} token={loaderData.token}/>

@@ -5,6 +5,7 @@ import { badRequest } from "./request.server";
 import { useSearchParams } from "@remix-run/react";
 import { Empleado, EmpleadoEncontrado, EmpleadoInfo, EmpleadoProductivo } from "../types/Empleado";
 import { Contrato } from "~/types/Contrato";
+
 export async function getUserData(request:Request){
  
    const requestOptions = await requestOptionsGET(request);
@@ -231,4 +232,19 @@ export async function despedirEmpleado(request:Request, id:string){
             error: error
         };
     }
+}
+
+export async function getPromedioProductividad(request:Request) {
+    let status = 0;
+    const requestOptions = await requestOptionsGET(request);
+    try{
+        let req = await fetch(`${url}/empleados/productividad/promedio`, requestOptions);
+        let response = await req.text();
+        let data = JSON.parse(response);
+        status = req.status
+        return data.productividad.toFixed(2);
+    } catch (error:any){
+        return 0;
+    }
+    
 }

@@ -22,5 +22,5 @@ export type LugarRhInfo = {
     direccion:string,
     encargado:string,
     correo:string,
-    promedio:string
+    productividad:string
 }
