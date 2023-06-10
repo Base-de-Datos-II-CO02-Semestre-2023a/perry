@@ -1,0 +1,52 @@
+.containerLugares{
+    overflow: auto;
+    width: -webkit-fill-available;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.cardLugar{
+    border-radius: 10px;
+    background-color: var(--md-sys-color-surface-container-lowest);
+    margin: 10px;
+}
+
+.cardLugar .informacion.general.filled.line{
+    margin: 10px;
+}
+
+.cardLugar section{
+    margin: 10px
+}
+
+.cardLugar .informacion.cantidad.filled.grande{
+    height: unset;
+    align-items: end;
+}
+.cardLugar .informacion.cantidad.filled.grande label{
+    font-weight: bold;
+    font-size: 1.01rem;
+}
+
+.cardLugar section.column{
+    gap: 5px;
+}
+
+.cardLugar section.row.stretch{
+    gap: 5px
+}
+
+.nombreLugar{
+    padding: 0px 20px;
+}
+
+.nombreLugar:hover{
+    cursor: pointer;
+    color: var(--md-sys-color-primary-light);
+    font-weight: bold;
+}
+
+.cardLugar .informacion.cantidad.filled.pequeño{
+    flex-direction: column-reverse;
+    display: flex;
+}
