@@ -1,4 +1,4 @@
-import { LoaderArgs, LoaderFunction, redirect } from "@remix-run/node"
+import { ActionArgs, LoaderArgs, LoaderFunction, redirect } from "@remix-run/node"
 import InformacionCantidad from "~/components/InformacionCantidad";
 import Tabla, { Row } from "~/components/Tabla";
 import { getContarEmpleadosVacaciones, getContratosConcluir, getEmpleados, infoRhLugar } from "~/utils/lugar.api"
@@ -7,6 +7,10 @@ import ExtendedFAB from "~/components/ExtendedFAB";
 import InformacionGeneral from "~/components/InformacionGeneral";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import { EmpleadoEncontrado } from "~/types/Empleado";
+import { NuevoContratoOverlay, registrarNuevoContrato } from "~/components/NuevoContratoOverlay";
+import { AgregarEmpleadoOverlay, agregarEmpleado } from "~/components/AgregarEmpleadoOverlay";
+import { useState } from "react";
+import { getUserSession } from "~/utils/sessions.server";
 
 export const links = () => [{ rel: "stylesheet", href: urlStylesLugarId }]
 
@@ -17,9 +21,8 @@ export const loader: LoaderFunction = async ({request, params}: LoaderArgs) => {
     const searchValue = searchParams.get("searchValue");
     let empleados : Row[] = [];
     let data :EmpleadoEncontrado[]=[];
-    
     data = params.id ? await getEmpleados(request, parseInt(params.id)):[];
-
+    const [token]  = await getUserSession(request);
     empleados = data.map((empleado)=>{
         return {
             id:empleado.id,
@@ -36,13 +39,31 @@ export const loader: LoaderFunction = async ({request, params}: LoaderArgs) => {
         title: lugarInf.nombre,
         redirect: "/rh/lugares",
         contratos,
-        empleadosVacaciones
+        empleadosVacaciones,
+        token
     };
     else return redirect("/lugares")
+}
+export const action = async ({ request }: ActionArgs) => {
+    const fromulario = await request.formData();
+
+    const overlay = fromulario.get("action") as string;
+    
+    switch (overlay) {
+        case "agregarEmpleado":
+            return await agregarEmpleado(fromulario, request);
+        case "nuevoContrato":
+            return await registrarNuevoContrato(fromulario, request);
+    }
+    return {
+        status: 500,
+        formError:"Error"
+    }
 }
 
 export default function Lugar(){
     const loaderData = useLoaderData();
+    const [agregarEmpleadoIsDisplayed, setIsAgregarEmpleadoDisplayed] = useState(false);
     const data = loaderData.lugarInf;
     const navigate = useNavigate();
     const openEmpleado = (id:string) => {
@@ -58,9 +79,8 @@ export default function Lugar(){
         <InformacionGeneral label={"Correo"} content={data.correo} variant={"default"} type={"transparent"}/> 
         </div>
         <div className="actionsBar">
-            {<ExtendedFAB onClick={function (): void {
-                throw new Error("Function not implemented.");
-            } } icon={"add"} label={"Nuevo empleado"} variant={"primary"}/> }
+            <ExtendedFAB onClick={()=>{}} icon={"sync_alt"} label={"Transferir empleado"} variant={"primary"}/>
+            <ExtendedFAB onClick={()=>{setIsAgregarEmpleadoDisplayed(true)} } icon={"add"} label={"Nuevo empleado"} variant={"tertiary"}/> 
         </div>
         <div className="grid-4-3">
             <Tabla headers={[]} rows={loaderData.empleados} onRowSelected={(index)=>openEmpleado(index)}
@@ -69,5 +89,6 @@ export default function Lugar(){
             <InformacionCantidad id="c" variant={"grande"} type={"filled"} cantidad={loaderData.contratos} title={"Contratos proximos a concluir"}/>
             <InformacionCantidad id="d" variant={"grande"} type={"filled"} cantidad={data.productividad.toFixed(2)} title={"Productividad"}/>
         </div>
+        <AgregarEmpleadoOverlay isDisplayed={agregarEmpleadoIsDisplayed} setDisplayed={setIsAgregarEmpleadoDisplayed} token={loaderData.token}/>
     </>
 }

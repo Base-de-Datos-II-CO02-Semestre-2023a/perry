@@ -118,7 +118,7 @@ export default function Index() {
                 </section>
             </div>
             <AgregarEmpleadoOverlay isDisplayed={newEmpleado} setDisplayed={setNewEmpleado} token={loaderData.token}/>
-            
+            <TransferirEmpleadoOverlay/>
         </>
     );
 }
@@ -148,3 +148,11 @@ export function ErrorBoundary() {
       }
   }
   
+
+  export function TransferirEmpleadoOverlay(){
+        return (
+            <>
+               
+            </>
+        );
+  }
